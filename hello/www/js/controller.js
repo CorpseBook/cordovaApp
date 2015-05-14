@@ -2,41 +2,66 @@ var corpseFaceApp = angular.module('corpseFaceApp', []);
 
 corpseFaceApp.controller('corpseCtrl', ['$scope', '$http', function ($scope, $http)
 {
+
+    corpseFaceApp.config(function($httpProvider)
+    {
+      $httpProvider.defaults.useXDomain = true;
+      delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    });
+
+    // this is a test method for GET requests to the server - it is successful (i.e. without CORS errors)
+
+    $scope.testGet = function ()
+    {
+      var config =
+      {
+        method: 'GET',
+        url: 'https://corpsebook-server.herokuapp.com/stories/',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      }
+
+      $http(config)
+      .success(function (data){
+        console.log(data);
+      });
+    }
+
+    // this is a method for posting user signIn objects - it is currently not fleshed out
+
     $scope.user = {};
 
     $scope.signIn = function (user)
     {
-      var config =
-      {
-          user: user
-      };
-
-      $http.post("http://corpsebook-server.herokuapp.com/stories/", config)
-        .success(function (data, status, headers, config)
-        {
-          console.log(data);
-        })
-        .error(function (data, status, headers, config)
-        {
-          console.log('error');
-        });
+        console.log("signIn");
     }
+
+    // this is a method for posting story objects to the server - it is currently getting CORS errors
 
     $scope.story = {};
 
      $scope.createNewStory = function (story)
       {
+        console.log(story);
         var config =
         {
-            story: story
+            method: 'POST',
+            url: 'https://corpsebook-server.herokuapp.com/stories/',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            data: story
         };
 
-        $http.post("http://corpsebook-server.herokuapp.com/stories/", config)
-          .success(function (data, status, headers, config)
+        $http(config)
+          .success(function (data)
           {
             console.log(data);
           })
-          .error(function (data, status, headers, config)
+          .error(function (data, status)
           {
             console.log('error');
           });
