@@ -1,18 +1,10 @@
-document.addEventListener("deviceready", onDeviceReady, false);
-
-function onDeviceReady() {
-    // Now safe to use device APIs
 $(document).ready(function() {
   var app = new App();
   app.ListenForButtonClick();
 });
 
-}
 
-function App ()
-{
-
-}
+function App () {}
 
 App.prototype.ListenForButtonClick = function ()
 {

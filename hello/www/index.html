@@ -1,48 +1,56 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<html>
+<html lang="en" ng-app="corpseFaceApp">
     <head>
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/app.css">
         <script type="text/javascript" src='js/jquery-2.1.4.js'></script>
-        <title>Hello World</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+        <title>CorpseBook</title>
     </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-            <div><button class="submit-button" type="submit">Test GET Request to Rails Server</button></div>
-        </div>
+    <body ng-controller="corpseCtrl">
+        <h1>CorpseBook Sign-In<h2>
+        <button id="facebook">Facebook Sign-In</button>
+        <h3>Sign-In</h3>
+        <form name="signInForm" ng-submit="signIn(user)" novalidate>
+          <label for="email">Email:</label>
+          <input id="email" type="email" name="email" ng-model="user.email" required /><br />
+          <label for="password">Password:</label>
+          <input id="password" type="password" name="password" ng-model="user.password" required /><br />
+          <br />
+          <button type="submit"
+                  ng-disabled="signInForm.$invalid">Submit</button>
+        </form>
+        <br />
+
+        <h3>Create New Story<h3>
+        <form name="newStoryForm" ng-submit="createNewStory(story)" novalidate>
+          <label for="title">Title</label>
+          <input id="title" type="text" name="title" ng-model="story.title" required /><br />
+
+          <label for="latitude">Latitude</label>
+          <input id="latitude" type="text" name="latitude" ng-model="story.origin_latitude" required /><br />
+          <br />
+
+          <label for="longitude">Longitude</label>
+          <input id="longitude" type="text" name="longitude" ng-model="story.origin_longitude" required /><br />
+          <br />
+
+          <label for="contributionLimit">Contribution Limit</label>
+          <!-- <input id="contributionLimit" type="text" name="contributionLimit" ng-model="story.contribution_limit" required /> -->
+          <select id="contributionLimit" name="contributionLimit" ng-model="story.contribution_limit">
+            <option selected value="">-- Select --</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+          </select>
+          <br />
+          <br />
+
+          <button type="submit"
+                  ng-disabled="newStoryForm.$invalid">Submit</button>
+        </form>
+        <br />
+
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript" src="js/test.js"></script>
+        <script type="text/javascript" src="js/controller.js"></script>
     </body>
 </html>
