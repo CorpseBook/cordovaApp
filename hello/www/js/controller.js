@@ -51,7 +51,7 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http', function ($scope, $h
         var config =
         {
             method: 'POST',
-            url: 'https://corpsebook-server.herokuapp.com/stories/',
+            url: 'https://corpsebook-server.herokuapp.com/stories',
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
