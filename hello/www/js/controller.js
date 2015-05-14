@@ -1,7 +1,8 @@
 var corpseFaceApp = angular.module('corpseFaceApp', []);
 
-corpseFaceApp.controller('corpseCtrl', ['$scope', '$http', function ($scope, $http)
+corpseFaceApp.controller('requestCtrl', ['$scope', '$http', function ($scope, $http)
 {
+    // this configures the headers for all HTTP requests
 
     corpseFaceApp.config(function($httpProvider)
     {
@@ -44,7 +45,9 @@ corpseFaceApp.controller('corpseCtrl', ['$scope', '$http', function ($scope, $ht
 
      $scope.createNewStory = function (story)
       {
+        story = {story : story}
         console.log(story);
+
         var config =
         {
             method: 'POST',
