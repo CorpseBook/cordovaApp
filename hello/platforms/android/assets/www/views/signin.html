@@ -1,0 +1,12 @@
+<h1>CorpseBook Sign-In<h2>
+<button id="facebook">Facebook Sign-In</button>
+<h3>Sign-In</h3>
+<form name="signInForm" ng-submit="signIn(user)" novalidate>
+  <label for="email">Email:</label>
+  <input id="email" type="email" name="email" ng-model="user.email" required /><br />
+  <label for="password">Password:</label>
+  <input id="password" type="password" name="password" ng-model="user.password" required /><br />
+  <br />
+  <button type="submit"
+          ng-disabled="signInForm.$invalid">Submit</button>
+</form>

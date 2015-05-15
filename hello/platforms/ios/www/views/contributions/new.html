@@ -1,0 +1,9 @@
+<h3>Contribute to a Story<h3>
+<form name="newContribution" ng-submit="createContribution(contribution)" novalidate>
+  <label for="content">Content</label>
+  <textarea id="content" name="content" ng-model="contribution.content" required></textarea><br />
+  <br />
+
+  <button type="submit"
+          ng-disabled="newContribution.$invalid">Submit</button>
+</form>

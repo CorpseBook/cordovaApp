@@ -3,54 +3,23 @@
     <head>
         <link rel="stylesheet" type="text/css" href="css/app.css">
         <script type="text/javascript" src='js/jquery-2.1.4.js'></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+        <script src="js/angular.js"></script>
+        <script src="js/angular-resource.js"></script>
+        <script src="js/angular-route.js"></script>
+<!--    // <script src="../../bower_components/angular/angular.js"></script>
+   //  <script src="../../bower_components/angular-route/angular-route.js"></script> -->
         <title>CorpseBook</title>
     </head>
-    <body ng-controller="corpseCtrl">
-        <h1>CorpseBook Sign-In<h2>
-        <button id="facebook">Facebook Sign-In</button>
-        <h3>Sign-In</h3>
-        <form name="signInForm" ng-submit="signIn(user)" novalidate>
-          <label for="email">Email:</label>
-          <input id="email" type="email" name="email" ng-model="user.email" required /><br />
-          <label for="password">Password:</label>
-          <input id="password" type="password" name="password" ng-model="user.password" required /><br />
-          <br />
-          <button type="submit"
-                  ng-disabled="signInForm.$invalid">Submit</button>
-        </form>
-        <br />
+    <body ng-controller="requestCtrl">
+        <a href="#/signin">Sign In</a>
+        <a href="#/stories/stories">Current Stories</a>
+        <a href="#/stories/new">New Story</a>
+        <a href="#/contributions/new">New Contribution</a>
+      <div ng-view class="container">
 
-        <h3>Create New Story<h3>
-        <form name="newStoryForm" ng-submit="createNewStory(story)" novalidate>
-          <label for="title">Title</label>
-          <input id="title" type="text" name="title" ng-model="story.title" required /><br />
-
-          <label for="latitude">Latitude</label>
-          <input id="latitude" type="text" name="latitude" ng-model="story.origin_latitude" required /><br />
-          <br />
-
-          <label for="longitude">Longitude</label>
-          <input id="longitude" type="text" name="longitude" ng-model="story.origin_longitude" required /><br />
-          <br />
-
-          <label for="contributionLimit">Contribution Limit</label>
-          <!-- <input id="contributionLimit" type="text" name="contributionLimit" ng-model="story.contribution_limit" required /> -->
-          <select id="contributionLimit" name="contributionLimit" ng-model="story.contribution_limit">
-            <option selected value="">-- Select --</option>
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-          </select>
-          <br />
-          <br />
-
-          <button type="submit"
-                  ng-disabled="newStoryForm.$invalid">Submit</button>
-        </form>
-        <br />
-
+      </div>
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/controller.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/controllers.js"></script>
     </body>
 </html>
