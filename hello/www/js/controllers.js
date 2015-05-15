@@ -1,5 +1,3 @@
-// var corpseFaceControllers = angular.module('corpseFaceApp', []);
-
 corpseFaceApp.controller('requestCtrl', ['$scope', '$http',
   function ($scope, $http) {
  corpseFaceApp.config(function($httpProvider)
