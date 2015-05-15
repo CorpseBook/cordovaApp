@@ -16,6 +16,10 @@ corpseFaceApp.config(['$routeProvider',
         templateUrl: './views/contributions/new.html',
         controller: 'requestCtrl'
       }).
+      when('/stories/stories', {
+        templateUrl: './views/stories/stories.html',
+        controller: 'requestCtrl'
+      }).
       otherwise({
         redirectTo: '/signin',
         templateUrl: './views/signin.html',

@@ -1,5 +1,4 @@
 
-
 var corpseFaceApp = angular.module('corpseFaceApp', []);
 
 corpseFaceApp.controller('requestCtrl', ['$scope', '$http', function ($scope, $http)
@@ -11,6 +10,8 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http', function ($scope, $h
       $httpProvider.defaults.useXDomain = true;
       delete $httpProvider.defaults.headers.common['X-Requested-With'];
     });
+
+
 
     // this is a method for posting user signIn objects - it is currently not fleshed out
 
