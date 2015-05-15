@@ -1,12 +1,8 @@
+// var corpseFaceControllers = angular.module('corpseFaceApp', []);
 
-
-var corpseFaceApp = angular.module('corpseFaceApp', []);
-
-corpseFaceApp.controller('requestCtrl', ['$scope', '$http', function ($scope, $http)
-{
-    // this configures the headers for all HTTP requests
-
-    corpseFaceApp.config(function($httpProvider)
+corpseFaceApp.controller('requestCtrl', ['$scope', '$http',
+  function ($scope, $http) {
+ corpseFaceApp.config(function($httpProvider)
     {
       $httpProvider.defaults.useXDomain = true;
       delete $httpProvider.defaults.headers.common['X-Requested-With'];
@@ -72,4 +68,9 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http', function ($scope, $h
           console.log("error");
         });
       }
-}]);
+  }]);
+
+// corpseFaceControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams',
+//   function($scope, $routeParams) {
+//     $scope.phoneId = $routeParams.phoneId;
+//   }]);
