@@ -1,1 +1,12 @@
-<button id="facebook" ng-submit="getStories()">Get Stories</button>
+<div id="get-button"><button id="get-stories" ng-click="getStories()">Get Stories</button></div>
+
+<div id="search-field">Search: <input ng-model="query"></div>
+
+<ul class="stories">
+        <li ng-repeat="story in stories | filter:query">
+          <p>{{story.title}}</p>
+          <p>{{story.snippet}}</p>
+          <p>{{story.contribution_limit}}</p>
+          <p>{{story.created_at}}</p>
+        </li>
+      </ul>

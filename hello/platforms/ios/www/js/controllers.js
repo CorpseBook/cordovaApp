@@ -20,7 +20,7 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http',
       $http(config)
       .success(function (data)
       {
-        console.log(data);
+        $scope.stories = data;
       })
       .error(function (data, status)
       {
