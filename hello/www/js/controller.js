@@ -79,10 +79,6 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http', function ($scope, $h
         {
           method: 'POST',
           url: 'https://corpsebook-server.herokuapp.com/stories/1/contributions',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
           data: contribution
         };
 
