@@ -1,5 +1,4 @@
 
-
 var corpseFaceApp = angular.module('corpseFaceApp', []);
 
 corpseFaceApp.controller('requestCtrl', ['$scope', '$http', function ($scope, $http)
@@ -12,25 +11,7 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http', function ($scope, $h
       delete $httpProvider.defaults.headers.common['X-Requested-With'];
     });
 
-    // this method GETs stories from the server
 
-    $scope.getStories = function ()
-    {
-      var config =
-      {
-          method: 'GET',
-          url: 'https://corpsebook-server.herokuapp.com/stories',
-      };
-      $http(config)
-      .success(function (data)
-      {
-        console.log(data);
-      })
-      .error(function (data, status)
-      {
-        console.log(status);
-      });
-    }
 
     // this is a method for posting user signIn objects - it is currently not fleshed out
 
