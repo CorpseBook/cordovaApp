@@ -6,6 +6,27 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http',
       delete $httpProvider.defaults.headers.common['X-Requested-With'];
     });
 
+    // this method GETs an individual story from the server
+
+    $scope.getStory = function (storyId)
+    {
+      var config =
+      {
+          method: 'GET',
+          url: 'https://corpsebook-server.herokuapp.com/stories/' + storyId
+      };
+      $http(config)
+      .success(function (data)
+      {
+        console.log(data);
+      })
+      .error(function (data, status)
+      {
+        console.log(status);
+      });
+    }
+
+
     // this method GETs stories from the server
 
     $scope.getStories = function ()
@@ -65,14 +86,15 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http',
       //Contribution
       $scope.contribution = {};
 
-      $scope.createContribution = function(contribution)
+      $scope.createContribution = function(contribution, storyId)
       {
         contribution = {contribution : contribution}
+        console.log(contribution);
 
         var config =
         {
           method: 'POST',
-          url: 'https://corpsebook-server.herokuapp.com/stories/1/contributions',
+          url: 'https://corpsebook-server.herokuapp.com/stories/' + storyId + '/contributions',
           data: contribution
         };
 

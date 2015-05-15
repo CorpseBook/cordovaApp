@@ -1,7 +1,10 @@
 <h3>Contribute to a Story<h3>
-<form name="newContribution" ng-submit="createContribution(contribution)" novalidate>
+<form name="newContribution" ng-submit="createContribution(contribution, storyId)" novalidate>
   <label for="content">Content</label>
   <textarea id="content" name="content" ng-model="contribution.content" required></textarea><br />
+  <br />
+  <label for="storyId">StoryId</label>
+  <input id="storyId" type="text" ng-model="storyId" name="storyId" required></textarea><br />
   <br />
 
   <button type="submit"
