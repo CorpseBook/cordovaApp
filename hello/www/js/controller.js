@@ -71,4 +71,33 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http', function ($scope, $h
             console.log('error');
           });
       }
+
+      //Contribution
+      $scope.contribution = {};
+
+      $scope.createContribution = function(contribution)
+      {
+        contribution = {contribution : contribution}
+
+        var config =
+        {
+          method: 'POST',
+          url: 'https://corpsebook-server.herokuapp.com/stories/1/contributions',
+          headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            data: contribution
+        };
+
+        $http(config)
+        .success(function(data)
+        {
+          console.log(data);
+        })
+        .error(function(data, status)
+        {
+          console.log("error");
+        });
+      }
 }]);
