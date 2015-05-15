@@ -38,7 +38,7 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http', function ($scope, $h
 
     $scope.signIn = function (user)
     {
-        console.log("signIn");
+        return "signIn";
     }
 
     // this is a method for posting story objects to the server - it is currently getting CORS errors
