@@ -1,20 +1,57 @@
 corpseFaceApp.controller('requestCtrl', ['$scope', '$http',
   function ($scope, $http) {
- corpseFaceApp.config(function($httpProvider)
-    {
-      $httpProvider.defaults.useXDomain = true;
-      delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    });
 
-    // this method GETs an individual story from the server
+  }]);
 
-    $scope.getStory = function (storyId)
+
+
+
+corpseFaceApp.controller('newContributionCtrl', ['$scope', '$http',
+  function ($scope, $http) {
+
+    $scope.contribution = {};
+
+    $scope.createContribution = function(contribution)
     {
+      contribution = {contribution : contribution}
+
       var config =
       {
-          method: 'GET',
-          url: 'https://corpsebook-server.herokuapp.com/stories/' + storyId
+        method: 'POST',
+        url: 'https://corpsebook-server.herokuapp.com/stories/1/contributions',
+        data: contribution
       };
+
+      $http(config)
+      .success(function(data)
+      {
+        console.log(data);
+      })
+      .error(function(data, status)
+      {
+        console.log("error");
+      });
+    }
+
+  }])
+
+corpseFaceApp.controller('newStoryCtrl', ['$scope', '$http',
+  function ($scope, $http) {
+
+    $scope.story = {};
+
+    $scope.createNewStory = function (story)
+    {
+      story = {story : story}
+      console.log(story);
+
+      var config =
+      {
+        method: 'POST',
+        url: 'https://corpsebook-server.herokuapp.com/stories',
+        data: story
+      };
+
       $http(config)
       .success(function (data)
       {
@@ -22,19 +59,22 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http',
       })
       .error(function (data, status)
       {
-        console.log(status);
+        console.log('error');
       });
     }
 
+  }])
 
-    // this method GETs stories from the server
+corpseFaceApp.controller('storiesCtrl', ['$scope', '$http',
+  function ($scope, $http) {
 
     $scope.getStories = function ()
     {
       var config =
       {
-          method: 'GET',
-          url: 'https://corpsebook-server.herokuapp.com/stories',
+
+        method: 'GET',
+        url: 'https://corpsebook-server.herokuapp.com/stories',
       };
       $http(config)
       .success(function (data)
@@ -45,67 +85,6 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http',
       {
         console.log(status);
       });
-    }
+    }()
 
-    // this is a method for posting user signIn objects - it is currently not fleshed out
-
-    $scope.user = {};
-
-    $scope.signIn = function (user)
-    {
-        return "signIn";
-    }
-
-    // this is a method for posting story objects to the server - it is currently getting CORS errors
-
-    $scope.story = {};
-
-     $scope.createNewStory = function (story)
-      {
-        story = {story : story}
-        console.log(story);
-
-        var config =
-        {
-            method: 'POST',
-            url: 'https://corpsebook-server.herokuapp.com/stories',
-            data: story
-        };
-
-        $http(config)
-          .success(function (data)
-          {
-            console.log(data);
-          })
-          .error(function (data, status)
-          {
-            console.log('error');
-          });
-      }
-
-      //Contribution
-      $scope.contribution = {};
-
-      $scope.createContribution = function(contribution, storyId)
-      {
-        contribution = {contribution : contribution}
-        console.log(contribution);
-
-        var config =
-        {
-          method: 'POST',
-          url: 'https://corpsebook-server.herokuapp.com/stories/' + storyId + '/contributions',
-          data: contribution
-        };
-
-        $http(config)
-        .success(function(data)
-        {
-          console.log(data);
-        })
-        .error(function(data, status)
-        {
-          console.log("error");
-        });
-      }
   }]);

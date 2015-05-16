@@ -1,12 +1,11 @@
-<div id="get-button"><button id="get-stories" ng-click="getStories()">Get Stories</button></div>
-
 <div id="search-field">Search: <input ng-model="query"></div>
 
 <ul class="stories">
-        <li ng-repeat="story in stories | filter:query">
-          <p>Title: {{story.title}}</p>
-          <p>Id: {{story.id}}</p>
-          <p>Contribution Limit: {{story.contribution_limit}}</p>
-          <p>Created: {{story.created_at}}</p>
-        </li>
-      </ul>
+	<li ng-repeat="story in stories | filter:query">
+		<p>Title: {{story.title}}</p>
+		<p>Id: {{story.id}}</p>
+		<p>Contribution Limit: {{story.contribution_limit}}</p>
+		<p>Created: {{story.created_at}}</p>
+	</li>
+</ul>
+

@@ -1,35 +1,37 @@
 var corpseFaceApp = angular.module('corpseFaceApp', ['ngRoute'
 ]);
 
-corpseFaceApp.config(['$routeProvider', '$locationProvider',
-  function($routeProvider, $locationProvider) {
-    // use the HTML5 History API
-    $locationProvider.html5Mode(true).hashPrefix('!');
+corpseFaceApp.config(function($httpProvider)
+  {
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  });
+
+corpseFaceApp.config(['$routeProvider',
+  function($routeProvider) {
     $routeProvider.
-      when('/signin', {
-        templateUrl: './views/signin.html',
-        controller: 'requestCtrl'
-      }).
       when('/stories/new', {
         templateUrl: './views/stories/new.html',
         controller: 'requestCtrl'
       }).
       when('/contributions/new', {
         templateUrl: './views/contributions/new.html',
-        controller: 'requestCtrl'
+        controller: 'newContributionCtrl'
       }).
       when('/stories/stories', {
         templateUrl: './views/stories/stories.html',
-        controller: 'requestCtrl'
+        controller: 'storiesCtrl'
       }).
       when('/stories/story', {
         templateUrl: './views/stories/story.html',
         controller: 'requestCtrl'
       }).
       otherwise({
-        redirectTo: '/signin',
-        templateUrl: './views/signin.html',
-        controller: 'requestCtrl'
+        redirectTo: '/stories/stories',
+        templateUrl: './views/stories/stories.html',
+        controller: 'storiesCtrl'
       });
   }]);
+
+corpseFaceApp
 
