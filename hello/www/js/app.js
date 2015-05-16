@@ -22,9 +22,11 @@ corpseFaceApp.config(['$routeProvider',
         controller: 'requestCtrl'
       }).
       otherwise({
-        redirectTo: '/signin',
-        templateUrl: './views/signin.html',
+        redirectTo: '/stories/stories',
+        templateUrl: './views/stories/stories.html',
         controller: 'requestCtrl'
       });
   }]);
+
+corpseFaceApp
 
