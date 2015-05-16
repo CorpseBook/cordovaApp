@@ -1,10 +1,9 @@
 var corpseFaceApp = angular.module('corpseFaceApp', ['ngRoute'
 ]);
 
-corpseFaceApp.config(['$routeProvider', '$locationProvider',
-  function($routeProvider, $locationProvider) {
+corpseFaceApp.config(['$routeProvider',
+  function($routeProvider) {
     // use the HTML5 History API
-    $locationProvider.html5Mode(true).hashPrefix('!');
     $routeProvider.
       when('/signin', {
         templateUrl: './views/signin.html',
