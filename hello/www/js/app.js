@@ -3,7 +3,6 @@ var corpseFaceApp = angular.module('corpseFaceApp', ['ngRoute'
 
 corpseFaceApp.config(['$routeProvider',
   function($routeProvider) {
-    // use the HTML5 History API
     $routeProvider.
       when('/stories/new', {
         templateUrl: './views/stories/new.html',
