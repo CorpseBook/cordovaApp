@@ -16,7 +16,7 @@ corpseFaceApp.config(['$routeProvider',
       }).
       when('/contributions/new', {
         templateUrl: './views/contributions/new.html',
-        controller: 'requestCtrl'
+        controller: 'newContributionCtrl'
       }).
       when('/stories/stories', {
         templateUrl: './views/stories/stories.html',
