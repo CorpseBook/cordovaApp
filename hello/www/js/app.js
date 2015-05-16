@@ -1,6 +1,12 @@
 var corpseFaceApp = angular.module('corpseFaceApp', ['ngRoute'
 ]);
 
+corpseFaceApp.config(function($httpProvider)
+  {
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  });
+
 corpseFaceApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
@@ -14,12 +20,12 @@ corpseFaceApp.config(['$routeProvider',
       }).
       when('/stories/stories', {
         templateUrl: './views/stories/stories.html',
-        controller: 'requestCtrl'
+        controller: 'storiesCtrl'
       }).
       otherwise({
         redirectTo: '/stories/stories',
         templateUrl: './views/stories/stories.html',
-        controller: 'requestCtrl'
+        controller: 'storiesCtrl'
       });
   }]);
 
