@@ -5,10 +5,6 @@ corpseFaceApp.config(['$routeProvider',
   function($routeProvider) {
     // use the HTML5 History API
     $routeProvider.
-      when('/signin', {
-        templateUrl: './views/signin.html',
-        controller: 'requestCtrl'
-      }).
       when('/stories/new', {
         templateUrl: './views/stories/new.html',
         controller: 'requestCtrl'
