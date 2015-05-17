@@ -74,8 +74,8 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParam
 
   }])
 
-corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$http',
-  function ($scope, $http) {
+corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$http', '$location',
+  function ($scope, $http, $location) {
 
     $scope.story = {};
     
@@ -104,6 +104,7 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$http',
       .success(function (data)
       {
         console.log(data);
+        $location.url('/stories');
       })
       .error(function (data, status)
       {
@@ -132,6 +133,10 @@ corpseFaceApp.controller('storiesCtrl', ['$scope', '$http', '$location',
     $scope.contribute = function(story){
       $location.url('/stories/' + story.id + '/contributions/new');
     }
+    $scope.create = function(){
+      $location.url('/stories/new' );
+    }
+
 
     $scope.getStories = function ()
     {

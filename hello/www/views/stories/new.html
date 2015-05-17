@@ -2,23 +2,8 @@
   <form name="newStoryForm" ng-submit="createNewStory(story)" novalidate>
     <label for="title">Title</label>
     <input id="title" type="text" name="title" ng-model="story.title" required /><br />
-
-    <label for="latitude">Latitude</label>
-    <input id="latitude" type="number" name="latitude" ng-model="story.origin_latitude" required /><br />
-    <br />
-
-    <label for="longitude">Longitude</label>
-    <input id="longitude" type="number" name="longitude" ng-model="story.origin_longitude" required /><br />
-    <br />
-
     <label for="contributionLimit">Contribution Limit</label>
     <input id="contributionLimit" type="number" name="contributionLimit" ng-model="story.contribution_limit" required />
-<!--           <select id="contributionLimit" name="contributionLimit" ng-model="story.contribution_limit">
-      <option selected value="">-- Select --</option>
-      <option value=5>5</option>
-      <option value=10>10</option>
-      <option value=15>15</option>
-    </select> -->
     <br />
     <br />
 
