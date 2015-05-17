@@ -1,3 +1,4 @@
+
 corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParams', '$location',
   function ($scope, $http, $routeParams, $location) {
 
@@ -32,10 +33,19 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$http',
   function ($scope, $http) {
 
     $scope.story = {};
+    
+
+    navigator.geolocation.getCurrentPosition(function(data){
+      console.log("Got position: ", data);
+      $scope.lat = data.coords.latitude
+      $scope.lng = data.coords.longitude
+    });
 
     $scope.createNewStory = function (story)
     {
       story = {story : story}
+      story.story.lat = $scope.lat
+      story.story.lng = $scope.lng
       console.log(story);
 
       var config =
