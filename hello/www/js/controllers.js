@@ -1,8 +1,3 @@
-corpseFaceApp.controller('requestCtrl', ['$scope', '$http',
-  function ($scope, $http) {
-
-  }]);
-
 corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParams',
   function ($scope, $http, $routeParams) {
 
@@ -93,7 +88,6 @@ corpseFaceApp.controller('storiesCtrl', ['$scope', '$http',
     {
       var config =
       {
-
         method: 'GET',
         url: 'https://corpsebook-server.herokuapp.com/stories',
       };
