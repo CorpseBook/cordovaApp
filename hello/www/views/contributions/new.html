@@ -2,6 +2,7 @@
 
 <p>Title: {{story.title}}</p>
 <p>Last Contribution: {{story.last_contribution.content}}</p>
+<p>Story in range: {{story.in_range}} </p>
 
 <form name="newContribution" ng-submit="createContribution(contribution, storyId)" novalidate>
   <label for="content">Content</label>
@@ -10,7 +11,6 @@
   <label for="storyId">User name</label>
   <input id="storyId" type="text" ng-model="contribution.username" name="username" required></textarea><br />
   <br />
-
-  <button type="submit"
+  <button ng-show="story.in_range" type="submit"
           ng-disabled="newContribution.$invalid">Submit</button>
 </form>
