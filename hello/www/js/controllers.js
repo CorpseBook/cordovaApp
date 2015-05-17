@@ -1,8 +1,18 @@
 
-corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParams', '$location',
-  function ($scope, $http, $routeParams, $location) {
+
+corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParams', '$location', 'getStory',
+  function ($scope, $http, $routeParams, $location, getStory) {
 
     $scope.contribution = {};
+    $scope.story = {};
+
+    getStory($routeParams.id)
+      .then(function(result){
+        $scope.story = result.data;
+      }, 
+      function(error){
+        console.log('Got error trying to get story: ', error)
+    })
 
     $scope.createContribution = function(contribution)
     {
@@ -68,32 +78,25 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$http',
 
   }])
 
-corpseFaceApp.controller('storyCtrl', ['$scope', '$http', '$routeParams',
-  function ($scope, $http, $routeParams) {
+corpseFaceApp.controller('storyCtrl', ['$scope', '$http', '$routeParams', 'getStory',
+  function ($scope, $http, $routeParams, getStory) {
 
-    $scope.getStories = function ()
-    {
-      var config =
-      {
-        method: 'GET',
-        url: 'https://corpsebook-server.herokuapp.com/stories/' + $routeParams.id,
-      };
-      $http(config)
-      .success(function (data)
-      {
-        console.log(data);
-        $scope.story = data;
-      })
-      .error(function (data, status)
-      {
-        console.log(status);
-      });
-    }()
+    getStory($routeParams.id)
+      .then(function(result){
+        $scope.story = result.data;
+      }, 
+      function(error){
+        console.log('Got error trying to get story: ', error)
+    })
 
   }]);
 
-corpseFaceApp.controller('storiesCtrl', ['$scope', '$http',
-  function ($scope, $http) {
+corpseFaceApp.controller('storiesCtrl', ['$scope', '$http', '$location',
+  function ($scope, $http, $location) {
+
+    $scope.contribute = function(story){
+      $location.url('/stories/' + story.id + '/contributions/new');
+    }
 
     $scope.getStories = function ()
     {
@@ -105,6 +108,7 @@ corpseFaceApp.controller('storiesCtrl', ['$scope', '$http',
       $http(config)
       .success(function (data)
       {
+        console.log(data)
         $scope.stories = data;
       })
       .error(function (data, status)

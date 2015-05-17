@@ -1,4 +1,8 @@
 <h3>Contribute to a Story<h3>
+
+<p>Title: {{story.title}}</p>
+<p>Last Contribution: {{story.last_contribution.content}}</p>
+
 <form name="newContribution" ng-submit="createContribution(contribution, storyId)" novalidate>
   <label for="content">Content</label>
   <textarea id="content" name="content" ng-model="contribution.content" required></textarea><br />
