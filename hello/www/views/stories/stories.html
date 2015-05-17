@@ -2,10 +2,7 @@
 
 <ul class="stories">
 	<li ng-repeat="story in stories | filter:query">
-		<p>Title: {{story.title}}</p>
-		<p>Id: {{story.id}}</p>
-		<p>Contribution Limit: {{story.contribution_limit}}</p>
-		<p>Created: {{story.created_at}}</p>
+		<ng-include src="'views/stories/story.html'"> </ng-include>
 	</li>
 </ul>
 

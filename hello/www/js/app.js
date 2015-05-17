@@ -12,11 +12,11 @@ corpseFaceApp.config(['$routeProvider',
     $routeProvider.
       when('/stories/new', {
         templateUrl: './views/stories/new.html',
-        controller: 'requestCtrl'
+        controller: 'storiesNewCtrl'
       }).
       when('/stories/:id/contributions/new', {
         templateUrl: './views/contributions/new.html',
-        controller: 'newContributionCtrl'
+        controller: 'contributionNewCtrl'
       }).
       when('/stories', {
         templateUrl: './views/stories/stories.html',
@@ -24,7 +24,7 @@ corpseFaceApp.config(['$routeProvider',
       }).
       when('/stories/:id', {
         templateUrl: './views/stories/story.html',
-        controller: 'requestCtrl'
+        controller: 'storyCtrl'
       }).
       otherwise({
         redirectTo: '/stories',

@@ -3,11 +3,8 @@ corpseFaceApp.controller('requestCtrl', ['$scope', '$http',
 
   }]);
 
-
-
-
-corpseFaceApp.controller('newContributionCtrl', ['$scope', '$http',
-  function ($scope, $http) {
+corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParams',
+  function ($scope, $http, $routeParams) {
 
     $scope.contribution = {};
 
@@ -18,7 +15,7 @@ corpseFaceApp.controller('newContributionCtrl', ['$scope', '$http',
       var config =
       {
         method: 'POST',
-        url: 'https://corpsebook-server.herokuapp.com/stories/1/contributions',
+        url: 'https://corpsebook-server.herokuapp.com/stories/'+ $routeParams.id +'/contributions',
         data: contribution
       };
 
@@ -35,7 +32,7 @@ corpseFaceApp.controller('newContributionCtrl', ['$scope', '$http',
 
   }])
 
-corpseFaceApp.controller('newStoryCtrl', ['$scope', '$http',
+corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$http',
   function ($scope, $http) {
 
     $scope.story = {};
@@ -64,6 +61,30 @@ corpseFaceApp.controller('newStoryCtrl', ['$scope', '$http',
     }
 
   }])
+
+corpseFaceApp.controller('storyCtrl', ['$scope', '$http', '$routeParams',
+  function ($scope, $http, $routeParams) {
+
+    $scope.getStories = function ()
+    {
+      var config =
+      {
+        method: 'GET',
+        url: 'https://corpsebook-server.herokuapp.com/stories/' + $routeParams.id,
+      };
+      $http(config)
+      .success(function (data)
+      {
+        console.log(data);
+        $scope.story = data;
+      })
+      .error(function (data, status)
+      {
+        console.log(status);
+      });
+    }()
+
+  }]);
 
 corpseFaceApp.controller('storiesCtrl', ['$scope', '$http',
   function ($scope, $http) {
