@@ -1,5 +1,5 @@
-corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParams',
-  function ($scope, $http, $routeParams) {
+corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParams', '$location',
+  function ($scope, $http, $routeParams, $location) {
 
     $scope.contribution = {};
 
@@ -18,6 +18,7 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParam
       .success(function(data)
       {
         console.log(data);
+        $location.url('/stories/' + $routeParams.id );
       })
       .error(function(data, status)
       {
