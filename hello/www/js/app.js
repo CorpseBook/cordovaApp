@@ -96,6 +96,81 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
   return new Story();
 }])
 
+
+corpseFaceApp.factory('Map', [ function(){
+
+
+
+  var Map = function(config){
+    this.markers = [];
+
+    var latlng = new google.maps.LatLng(0,0);
+
+    var mapOptions = {
+      center: latlng,
+      zoom: 5
+    };
+
+    this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  }
+  
+
+
+
+  Map.prototype = {
+
+    addMarker: function(story){
+      console.log(story);
+      var myLatlng = new google.maps.LatLng(story.lat, story.lng)
+      var title = story.title
+      console.log(story.id)
+      var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: this.map,
+        title: title,
+        url: '#/stories/' + story.id
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        //getStory(story.id)
+      });
+
+      this.markers.push(marker)
+    },
+
+    addStoryMarkers: function(stories){
+      for (var i = 0; i < stories.length; i++) {
+        this.addMarker(stories[i]);
+      }
+    },
+
+    // Sets the map on all markers in the array.
+    setAllMap: function(map) {
+      for (var i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(map);
+      }
+    },
+
+    // Removes the markers from the map, but keeps them in the array.
+    clearMarkers: function() {
+      this.setAllMap(null);
+    },
+
+    // Shows any markers currently in the array.
+    showMarkers: function() {
+      this.setAllMap(this.map);
+    },
+
+    // Deletes all markers in the array by removing references to them.
+    deleteMarkers: function() {
+      this.clearMarkers();
+      this.markers = [];
+    }
+
+  }
+
+  return new Map();
+}])
+
 corpseFaceApp.config(function($httpProvider)
   {
     $httpProvider.defaults.useXDomain = true;

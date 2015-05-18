@@ -154,61 +154,13 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
 
 
 
-corpseFaceApp.controller('mapCtrl', ['$scope', '$location',
-  function ($scope, $location) {
+corpseFaceApp.controller('mapCtrl', ['$scope', '$location', 'Map',
+  function ($scope, $location, Map) {
 
-    var markers = [];
-
-    var addMarker = function(story){
-      console.log(story);
-      var myLatlng = new google.maps.LatLng(story.lat, story.lng)
-      var title = story.title
-      console.log(story.id)
-      var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: $scope.map,
-        title: title,
-        url: '#/stories/' + story.id
-      });
-      google.maps.event.addListener(marker, 'click', function() {
-        getStory(story.id)
-      });
-
-      markers.push(marker)
-    }
-
-    var addMarkers = function(stories){
-      for (var i = 0; i < stories.length; i++) {
-        addMarker(stories[i]);
-      }
-    }
-
-    // Sets the map on all markers in the array.
-    function setAllMap(map) {
-      for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(map);
-      }
-    }
-
-    // Removes the markers from the map, but keeps them in the array.
-    function clearMarkers() {
-      setAllMap(null);
-    }
-
-    // Shows any markers currently in the array.
-    function showMarkers() {
-      setAllMap(map);
-    }
-
-    // Deletes all markers in the array by removing references to them.
-    function deleteMarkers() {
-      clearMarkers();
-      markers = [];
-    }
 
     function updateStoryMarkers(){
-      deleteMarkers();
-      addMarkers($scope.$parent.stories.filter(function(story){return story.completed == $scope.$parent.completedFilter.completed}));
+      Map.deleteMarkers();
+      Map.addStoryMarkers($scope.$parent.stories.filter(function(story){return story.completed == $scope.$parent.completedFilter.completed}));
     }
 
     $scope.$on('stories_update', function(e, stories){
@@ -219,16 +171,7 @@ corpseFaceApp.controller('mapCtrl', ['$scope', '$location',
 
     $scope.$on('new_location', function(e, data){
       console.log('got boardcast: ', e);
-      $scope.map.panTo(new google.maps.LatLng(data.lat, data.lng));
+      Map.map.panTo(new google.maps.LatLng(data.lat, data.lng));
     })
-
-    var latlng = new google.maps.LatLng(0,0);
-
-    var mapOptions = {
-      center: latlng,
-      zoom: 5
-    };
-
-    $scope.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   }
 ]);
