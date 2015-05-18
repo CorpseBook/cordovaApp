@@ -99,8 +99,6 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
 
 corpseFaceApp.factory('Map', [ function(){
 
-
-
   var Map = function(config){
     this.markers = [];
 
@@ -113,9 +111,6 @@ corpseFaceApp.factory('Map', [ function(){
 
     this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   }
-  
-
-
 
   Map.prototype = {
 
