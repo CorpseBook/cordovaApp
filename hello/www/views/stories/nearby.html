@@ -8,7 +8,7 @@
 	<button type="button" ng-click="list()">List</button>
 </div>
 
-<ul class="stories">
+<ul class="stories container">
 
 	<div id="list" ng-if="displayList">
 		<li ng-repeat="story in stories | filter: completedFilter ">
@@ -17,8 +17,10 @@
 		</li>
 	</div>
 
-	<div id="map" ng-if="!displayList">
-		MAP!
+	<div  class="container">
+		<div id="map-canvas" ng-hide="displayList" >
+
+		</div>
 	</div>
 
 

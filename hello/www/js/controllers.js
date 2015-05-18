@@ -102,8 +102,8 @@ corpseFaceApp.controller('storiesCtrl', ['$scope', '$location', 'Story',
   }]);
 
 
-corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
-  function ($scope, $location, Story) {
+corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
+  function ($scope, $location, Story, Map) {
 
     $scope.completedFilter = {completed: false};
 
@@ -116,10 +116,12 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
 
     $scope.completeStories = function(){
       $scope.completedFilter = {completed: true}
+      updateStoryMarkers();
     }
 
     $scope.incompleteStories = function(){
       $scope.completedFilter = {completed: false}
+      updateStoryMarkers();
     }
 
     $scope.list = function(){
@@ -130,20 +132,30 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
       $scope.displayList = false
     }
 
+    function updateStoryMarkers(){
+      Map.deleteMarkers();
+      Map.addStoryMarkers($scope.stories.filter(function(story){return story.completed == $scope.completedFilter.completed}));
+    }
+
     navigator.geolocation.getCurrentPosition(function(data){
       console.log("Got position: ", data);
       $scope.lat = data.coords.latitude
       $scope.lng = data.coords.longitude
 
+      $scope.$broadcast('new_location', {lat: data.coords.latitude , lng: data.coords.longitude})
+      Map.map.panTo(new google.maps.LatLng($scope.lat, $scope.lng));
+      // Story.getStories()
       Story.getNearby()
         .then(function(result){
           console.log(result);
           $scope.stories = result.data;
+          updateStoryMarkers();
+
         }, function(error){
           console.log("Got error trying to get nearby stories", error);
         })
     });
-
+}]);
 
 
   }]);
