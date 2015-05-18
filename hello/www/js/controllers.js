@@ -160,15 +160,16 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
 
     $scope.stories = {};
     // $scope.completedFilter = {completed: true};
-    $scope.displayList = true;
-    Map.initMap();
+    $scope.displayList = false;
 
     Story.getStories()
     .then(function(result){
       console.log("got stories");
       console.log(result)
       $scope.stories = result.data;
+      Map.initMap();
       updateStoryMarkers();
+
     }, function(error){
         console.log("Got error trying to get stories", error);
     });
