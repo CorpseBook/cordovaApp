@@ -9,7 +9,7 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$loc
     Story.getStory(storyID)
       .then(function(result){
         $scope.story = result.data;
-      }, 
+      },
       function(error){
         console.log('Got error trying to get story: ', error)
     })
@@ -44,7 +44,7 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$loc
 corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story',
   function ($scope, $location, Story) {
 
-    $scope.story = {};    
+    $scope.story = {};
 
     navigator.geolocation.getCurrentPosition(function(data){
       console.log("Got position: ", data);
@@ -74,7 +74,7 @@ corpseFaceApp.controller('storyCtrl', ['$scope', '$routeParams', 'Story',
     Story.getStory($routeParams.id)
       .then(function(result){
         $scope.story = result.data;
-      }, 
+      },
       function(error){
         console.log('Got error trying to get story: ', error)
     })
@@ -130,8 +130,6 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
       $scope.displayList = false
     }
 
-
-
     navigator.geolocation.getCurrentPosition(function(data){
       console.log("Got position: ", data);
       $scope.lat = data.coords.latitude
@@ -148,4 +146,42 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
 
 
 
+  }]);
+
+corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story',
+  function ($scope, $location, Story){
+
+      $scope.stories = {};
+      var geocoder = new google.maps.Geocoder();
+
+      $scope.list = function(){
+      $scope.displayList = true
+    }
+
+      $scope.map = function(){
+      $scope.displayList = false
+    }
+
+      Story.getStories()
+      .then(function(result){
+        console.log(result)
+        $scope.stories = result.data;
+    }, function(error){
+        console.log("Got error trying to get stories", error);
+    })
+
+      $scope.getStoriesNearLocation = function (address){
+        geocoder.geocode({'address': address}, function(results, status){
+          var lat = results[0].geometry.location.A
+          var lng = results[0].geometry.location.F
+
+          Story.getNearby(lat, lng)
+            .then(function(result){
+              console.log(result);
+              $scope.stories = result.data;
+            }, function(error){
+              console.log("Got error trying to get nearby stories", error);
+            })
+            });
+      }
   }]);
