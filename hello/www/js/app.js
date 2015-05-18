@@ -79,13 +79,14 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
     },
 
     getNearby: function(lat, lng){
+      console.log('In get nearby with lat, lng:', lat, lng);
 
       var data = {search: {lat: lat, lng: lng}};
 
       var config =
       {
         method: 'POST',
-        url: url + 'nearby',
+        url: url + 'stories/nearby',
         data: data
       };
 

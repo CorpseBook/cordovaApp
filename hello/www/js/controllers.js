@@ -144,8 +144,8 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
 
       $scope.$broadcast('new_location', {lat: data.coords.latitude , lng: data.coords.longitude})
       Map.map.panTo(new google.maps.LatLng($scope.lat, $scope.lng));
-      // Story.getStories()
-      Story.getNearby()
+
+      Story.getNearby($scope.lat, $scope.lng)
         .then(function(result){
           console.log(result);
           $scope.stories = result.data;
