@@ -112,12 +112,12 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
     }
 
     $scope.completeStories = function(){
-      $scope.completedFilter = {completed: true}
+      $scope.completedFilter = true
       updateStoryMarkers();
     }
 
     $scope.incompleteStories = function(){
-      $scope.completedFilter = {completed: false}
+      $scope.completedFilter = false
       updateStoryMarkers();
     }
 
@@ -131,7 +131,7 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
 
     function updateStoryMarkers(){
       Map.deleteMarkers();
-      Map.addStoryMarkers($scope.stories.filter(function(story){return story.completed == $scope.completedFilter.completed}));
+      Map.addStoryMarkers($scope.stories.filter(function(story){return story.completed == $scope.completedFilter}));
     }
 
     navigator.geolocation.getCurrentPosition(function(data){
