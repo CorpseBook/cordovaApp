@@ -105,7 +105,7 @@ corpseFaceApp.controller('storiesCtrl', ['$scope', '$location', 'Story',
 corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
   function ($scope, $location, Story, Map) {
 
-    $scope.completedFilter = {completed: false};
+    $scope.completedFilter = false;
 
     $scope.contribute = function(story){
       $location.url('/stories/' + story.id + '/contributions/new');
@@ -135,16 +135,15 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
     }
 
     navigator.geolocation.getCurrentPosition(function(data){
-      console.log("Got position: ", data);
+
       $scope.lat = data.coords.latitude
       $scope.lng = data.coords.longitude
 
-      $scope.$broadcast('new_location', {lat: $scope.lat , lng: $scope.lng})
       Map.map.panTo(new google.maps.LatLng($scope.lat, $scope.lng));
 
       Story.getNearby($scope.lat, $scope.lng)
         .then(function(result){
-          console.log(result);
+
           $scope.stories = result.data;
           updateStoryMarkers();
 
