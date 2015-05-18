@@ -1,0 +1,6 @@
+<form name="newStoryForm" ng-submit="getStory(storyId)" novalidate>
+    <label for="storyId">storyId</label>
+    <input id="storyId" type="number" name="storyId" ng-model="storyId" required /><br />
+    <button type="submit"
+            ng-disabled="getStoryForm.$invalid">Submit</button>
+  </form>

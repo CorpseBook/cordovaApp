@@ -1,0 +1,11 @@
+<div id="search-field">Search: <input ng-model="query"></div>
+
+<ul class="stories">
+	<li ng-repeat="story in stories | filter:query">
+		<p>Title: {{story.title}}</p>
+		<p>Id: {{story.id}}</p>
+		<p>Contribution Limit: {{story.contribution_limit}}</p>
+		<p>Created: {{story.created_at}}</p>
+	</li>
+</ul>
+

@@ -1,89 +1,105 @@
-corpseFaceApp.controller('requestCtrl', ['$scope', '$http',
-  function ($scope, $http) {
- corpseFaceApp.config(function($httpProvider)
-    {
-      $httpProvider.defaults.useXDomain = true;
-      delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    });
+var url = 'https://corpsebook-server.herokuapp.com/'
+// var url = 'http://192.168.0.2:3000/'
 
-    // this method GETs stories from the server
+corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParams', '$location', 'Story',
+  function ($scope, $http, $routeParams, $location, Story) {
 
-    $scope.getStories = function ()
-    {
-      var config =
-      {
-          method: 'GET',
-          url: 'https://corpsebook-server.herokuapp.com/stories',
-      };
-      $http(config)
-      .success(function (data)
-      {
-        $scope.stories = data;
-      })
-      .error(function (data, status)
-      {
-        console.log(status);
-      });
-    }
+    var storyID = $routeParams.id;
 
-    // this is a method for posting user signIn objects - it is currently not fleshed out
-
-    $scope.user = {};
-
-    $scope.signIn = function (user)
-    {
-        return "signIn";
-    }
-
-    // this is a method for posting story objects to the server - it is currently getting CORS errors
-
+    $scope.contribution = {};
     $scope.story = {};
 
-     $scope.createNewStory = function (story)
-      {
-        story = {story : story}
-        console.log(story);
+    Story.getStory(storyID)
+      .then(function(result){
+        $scope.story = result.data;
+      }, 
+      function(error){
+        console.log('Got error trying to get story: ', error)
+    })
 
-        var config =
-        {
-            method: 'POST',
-            url: 'https://corpsebook-server.herokuapp.com/stories',
-            data: story
-        };
+    navigator.geolocation.getCurrentPosition(function(data){
+      console.log("Got position: ", data);
+      $scope.lat = data.coords.latitude
+      $scope.lng = data.coords.longitude
 
-        $http(config)
-          .success(function (data)
-          {
-            console.log(data);
-          })
-          .error(function (data, status)
-          {
-            console.log('error');
-          });
-      }
-
-      //Contribution
-      $scope.contribution = {};
-
-      $scope.createContribution = function(contribution)
-      {
-        contribution = {contribution : contribution}
-
-        var config =
-        {
-          method: 'POST',
-          url: 'https://corpsebook-server.herokuapp.com/stories/1/contributions',
-          data: contribution
-        };
-
-        $http(config)
-        .success(function(data)
-        {
-          console.log(data);
+      Story.isInRange(storyID, $scope.lat, $scope.lng)
+        .then(function(result){
+          console.log(result);
+          $scope.story.in_range = result.data.in_range
+        }, function(error){
+          console.log('Got error trying to get is in range: ', error)
         })
-        .error(function(data, status)
-        {
-          console.log("error");
-        });
-      }
+    });
+
+
+    $scope.createContribution = function(contribution)
+    {
+      Story.addContribution(storyID, contribution)
+        .then(function(result){
+          $location.url('/stories/' + storyID );
+        }, function(error){
+          console.log("Got error adding contribution: ", error);
+        })
+    }
+
+  }])
+
+corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$http', '$location', 'Story',
+  function ($scope, $http, $location, Story) {
+
+    $scope.story = {};    
+
+    navigator.geolocation.getCurrentPosition(function(data){
+      console.log("Got position: ", data);
+      $scope.lat = data.coords.latitude
+      $scope.lng = data.coords.longitude
+    });
+
+    $scope.createNewStory = function (story)
+    {
+      story = {story : story}
+      story.story.lat = $scope.lat
+      story.story.lng = $scope.lng
+
+      Story.create(story)
+        .then(function(result){
+          $location.url('/stories');
+        }, function(error){
+          console.log("Got error creating story: ", error);
+        })
+    }
+
+  }])
+
+corpseFaceApp.controller('storyCtrl', ['$scope', '$http', '$routeParams', 'Story',
+  function ($scope, $http, $routeParams, Story) {
+
+    Story.getStory($routeParams.id)
+      .then(function(result){
+        $scope.story = result.data;
+      }, 
+      function(error){
+        console.log('Got error trying to get story: ', error)
+    })
+
+  }]);
+
+corpseFaceApp.controller('storiesCtrl', ['$scope', '$http', '$location', 'Story',
+  function ($scope, $http, $location, Story) {
+
+    $scope.contribute = function(story){
+      $location.url('/stories/' + story.id + '/contributions/new');
+    }
+    $scope.create = function(){
+      $location.url('/stories/new' );
+    }
+
+    Story.getStories()
+      .then(function(result){
+        console.log(result)
+        $scope.stories = result.data;
+      }, function(error){
+        console.log("Got error trying to get stories", error);
+      })
+
   }]);
