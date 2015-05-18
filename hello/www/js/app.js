@@ -1,20 +1,99 @@
 var corpseFaceApp = angular.module('corpseFaceApp', ['ngRoute'
 ]);
 
-corpseFaceApp.factory('getStory', [ '$http', '$q', function($http, $q){
-  // var func = function(){console.log("Making getStories service, scope is: ", $scope)};
-  var func = function(id){
-    var config =
-      {
-        method: 'GET',
-        url: 'https://corpsebook-server.herokuapp.com/stories/' + id,
-      };
-    var story = $http(config)
+corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
+
+  var url = 'https://corpsebook-server.herokuapp.com/'
+  // var url = 'http://192.168.0.2:3000/' 
+
+  var Story = function(config){
+
+  }
+  
+  var promisify = function(config){
+    var request = $http(config)
     var deferred = $q.deferred = $q.defer();
-    deferred.resolve(story);
+    deferred.resolve(request);
     return deferred.promise;
   }
-  return func;
+
+
+  Story.prototype = {
+    getStory : function(id){
+      var config =
+        {
+          method: 'GET',
+          url: url +'stories/' + id,
+        };
+      return promisify(config);
+    },
+
+    isInRange: function (id, lat, lng){
+      var data = {search: {lat: lat, lng: lng}};
+
+      var config =
+      {
+        method: 'POST',
+        url: url + 'stories/' + id + '/in_range',
+        data: data,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      };
+
+      return promisify(config);
+    },
+
+    getStories: function(){
+      var config =
+      {
+        method: 'GET',
+        url: url + 'stories',
+      };
+      return promisify(config);
+    },
+
+    addContribution: function(id, contribution){
+      contribution = {contribution : contribution}
+
+      var config =
+      {
+        method: 'POST',
+        url: url + 'stories/'+ id +'/contributions',
+        data: contribution
+      };
+      
+      return promisify(config);
+    },
+
+    create: function(story){
+      var config =
+      {
+        method: 'POST',
+        url: url + 'stories',
+        data: story
+      };
+
+      return promisify(config);
+    },
+
+    getNearby: function(lat, lng){
+
+      var data = {search: {lat: lat, lng: lng}};
+
+      var config =
+      {
+        method: 'POST',
+        url: url + 'nearby',
+        data: data
+      };
+
+      return promisify(config);
+    }
+  }
+
+  return new Story();
 }])
 
 corpseFaceApp.config(function($httpProvider)
@@ -43,12 +122,13 @@ corpseFaceApp.config(['$routeProvider',
         controller: 'storyCtrl'
       }).
       otherwise({
-        redirectTo: '/stories',
-        templateUrl: './views/stories/stories.html',
-        controller: 'storiesCtrl'
+        redirectTo: '/nearby',
+        templateUrl: './views/stories/nearby.html',
+        controller: 'nearbyCtrl'
       });
   }]);
 
+var map;
 var app = {
     // Application Constructor
     initialize: function() {
@@ -60,6 +140,19 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+
+        document.addEventListener("DOMContentLoaded", function(event) { 
+          // console.log('doc ready');
+
+          // var latlng = new google.maps.LatLng(-34.397, 150.644);
+
+          // var mapOptions = {
+          //   center: latlng,
+          //   zoom: 12
+          // };
+          // console.log("making map control")
+          // map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        });
 
     },
     // deviceready Event Handler
