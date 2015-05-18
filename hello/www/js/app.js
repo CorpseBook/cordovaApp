@@ -1,20 +1,53 @@
 var corpseFaceApp = angular.module('corpseFaceApp', ['ngRoute'
 ]);
 
-corpseFaceApp.factory('getStory', [ '$http', '$q', function($http, $q){
+corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
   // var func = function(){console.log("Making getStories service, scope is: ", $scope)};
-  var func = function(id){
-    var config =
-      {
-        method: 'GET',
-        url: 'https://corpsebook-server.herokuapp.com/stories/' + id,
-      };
-    var story = $http(config)
+ 
+
+  var url = 'https://corpsebook-server.herokuapp.com/'
+  // var url = 'http://192.168.0.2:3000/' 
+
+  var promisify = function(config){
+    var request = $http(config)
     var deferred = $q.deferred = $q.defer();
-    deferred.resolve(story);
+    deferred.resolve(request);
     return deferred.promise;
   }
-  return func;
+
+  var Story = function(config){
+
+  }
+
+  Story.prototype = {
+    getStory : function(id){
+      var config =
+        {
+          method: 'GET',
+          url: url +'stories/' + id,
+        };
+      return promisify(config);
+    },
+    isInRange: function (id, lat, lng){
+      var data = {search: {lat: lat, lng: lng}};
+
+      var config =
+      {
+        method: 'POST',
+        url: url + 'stories/' + id + '/in_range',
+        data: data,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      };
+
+      return promisify(config);
+    } 
+  }
+
+
+  return new Story();
 }])
 
 corpseFaceApp.config(function($httpProvider)
