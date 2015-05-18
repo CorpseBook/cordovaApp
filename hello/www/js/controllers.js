@@ -110,8 +110,8 @@ corpseFaceApp.controller('storyCtrl', ['$scope', '$http', '$routeParams', 'Story
 
   }]);
 
-corpseFaceApp.controller('storiesCtrl', ['$scope', '$http', '$location',
-  function ($scope, $http, $location) {
+corpseFaceApp.controller('storiesCtrl', ['$scope', '$http', '$location', 'Story'
+  function ($scope, $http, $location, Story) {
 
     $scope.contribute = function(story){
       $location.url('/stories/' + story.id + '/contributions/new');
@@ -120,24 +120,12 @@ corpseFaceApp.controller('storiesCtrl', ['$scope', '$http', '$location',
       $location.url('/stories/new' );
     }
 
-
-    $scope.getStories = function ()
-    {
-      var config =
-      {
-        method: 'GET',
-        url: url + 'stories',
-      };
-      $http(config)
-      .success(function (data)
-      {
-        console.log(data)
-        $scope.stories = data;
+    Story.getStories()
+      .then(function(result){
+        console.log(result)
+        $scope.stories = result;
+      }, function(error){
+        console.log("Got error trying to get stories", error);
       })
-      .error(function (data, status)
-      {
-        console.log(status);
-      });
-    }()
 
   }]);
