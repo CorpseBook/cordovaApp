@@ -27,6 +27,7 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
         };
       return promisify(config);
     },
+
     isInRange: function (id, lat, lng){
       var data = {search: {lat: lat, lng: lng}};
 
@@ -75,7 +76,23 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
       };
 
       return promisify(config);
+    },
+
+    nearby: function(lat, lng){
+
+      var data = {search: {lat: lat, lng: lng}};
+
+      var config =
+      {
+        method: 'GET',
+        url: url + 'stories/nearby',
+        data: data
+      };
+
+      return promisify(config);
     }
+
+
 
   }
 
