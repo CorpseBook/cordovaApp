@@ -79,6 +79,7 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
     },
 
     getNearby: function(lat, lng){
+      console.log('In get nearby with lat, lng:', lat, lng);
 
       var data = {search: {lat: lat, lng: lng}};
 
@@ -100,23 +101,28 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
 corpseFaceApp.factory('Map', [ function(){
 
   var Map = function(config){
-    this.markers = [];
-
-    var latlng = new google.maps.LatLng(0,0);
-
-    var mapOptions = {
-      center: latlng,
-      zoom: 5
-    };
-
-    this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    this.initMap();
   }
 
   Map.prototype = {
 
+    initMap: function(){
+      this.markers = [];
+
+      var latlng = new google.maps.LatLng(0,0);
+
+      var mapOptions = {
+        center: latlng,
+        zoom: 5
+      };
+
+      this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+    },
+
     addMarker: function(story){
       console.log(story);
-      var myLatlng = new google.maps.LatLng(story.lat, story.lng)
+      var myLatlng = new google.maps.LatLng(story.location.lat, story.location.lng)
       var title = story.title
       console.log(story.id)
       var marker = new google.maps.Marker({
@@ -126,7 +132,7 @@ corpseFaceApp.factory('Map', [ function(){
         url: '#/stories/' + story.id
       });
       google.maps.event.addListener(marker, 'click', function() {
-        //getStory(story.id)
+        window.location.href = marker.url;
       });
 
       this.markers.push(marker)
