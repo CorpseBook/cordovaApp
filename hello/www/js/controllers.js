@@ -116,10 +116,12 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
 
     $scope.completeStories = function(){
       $scope.completedFilter = {completed: true}
+      $scope.$broadcast('stories_update', $scope.stories)
     }
 
     $scope.incompleteStories = function(){
       $scope.completedFilter = {completed: false}
+      $scope.$broadcast('stories_update', $scope.stories)
     }
 
     $scope.list = function(){
@@ -135,10 +137,15 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
       $scope.lat = data.coords.latitude
       $scope.lng = data.coords.longitude
 
+      $scope.$broadcast('new_location', {lat: data.coords.latitude , lng: data.coords.longitude})
+
+      // Story.getStories()
       Story.getNearby()
         .then(function(result){
           console.log(result);
           $scope.stories = result.data;
+          $scope.$broadcast('stories_update', $scope.stories)
+
         }, function(error){
           console.log("Got error trying to get nearby stories", error);
         })
@@ -150,13 +157,78 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
 corpseFaceApp.controller('mapCtrl', ['$scope', '$location',
   function ($scope, $location) {
 
+    var markers = [];
+
+    var addMarker = function(story){
+      console.log(story);
+      var myLatlng = new google.maps.LatLng(story.lat, story.lng)
+      var title = story.title
+      console.log(story.id)
+      var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: $scope.map,
+        title: title,
+        url: '#/stories/' + story.id
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        getStory(story.id)
+      });
+
+      markers.push(marker)
+    }
+
+    var addMarkers = function(stories){
+      for (var i = 0; i < stories.length; i++) {
+        addMarker(stories[i]);
+      }
+    }
+
+    // Sets the map on all markers in the array.
+    function setAllMap(map) {
+      for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+      }
+    }
+
+    // Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+      setAllMap(null);
+    }
+
+    // Shows any markers currently in the array.
+    function showMarkers() {
+      setAllMap(map);
+    }
+
+    // Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+      clearMarkers();
+      markers = [];
+    }
+
+    function updateStoryMarkers(){
+      deleteMarkers();
+      addMarkers($scope.$parent.stories.filter(function(story){return story.completed == $scope.$parent.completedFilter.completed}));
+    }
+
+    $scope.$on('stories_update', function(e, stories){
+      console.log('got new stories broadcast: ', e);
+      updateStoryMarkers();
+    })
+
+
+    $scope.$on('new_location', function(e, data){
+      console.log('got boardcast: ', e);
+      $scope.map.panTo(new google.maps.LatLng(data.lat, data.lng));
+    })
+
     var latlng = new google.maps.LatLng(0,0);
 
     var mapOptions = {
       center: latlng,
-      zoom: 2
+      zoom: 5
     };
-    console.log("making map control")
+
     $scope.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   }
 ]);
