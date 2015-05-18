@@ -9,7 +9,7 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$loc
     Story.getStory(storyID)
       .then(function(result){
         $scope.story = result.data;
-      }, 
+      },
       function(error){
         console.log('Got error trying to get story: ', error)
     })
@@ -44,7 +44,7 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$loc
 corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story',
   function ($scope, $location, Story) {
 
-    $scope.story = {};    
+    $scope.story = {};
 
     navigator.geolocation.getCurrentPosition(function(data){
       console.log("Got position: ", data);
@@ -74,7 +74,7 @@ corpseFaceApp.controller('storyCtrl', ['$scope', '$routeParams', 'Story',
     Story.getStory($routeParams.id)
       .then(function(result){
         $scope.story = result.data;
-      }, 
+      },
       function(error){
         console.log('Got error trying to get story: ', error)
     })
@@ -154,3 +154,71 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
     });
 }]);
 
+
+corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
+  function ($scope, $location, Story, Map){
+
+    $scope.stories = {};
+    // $scope.completedFilter = {completed: true};
+    $scope.displayList = true;
+    Map.initMap();
+
+    Story.getStories()
+    .then(function(result){
+      console.log("got stories");
+      console.log(result)
+      $scope.stories = result.data;
+      updateStoryMarkers();
+    }, function(error){
+        console.log("Got error trying to get stories", error);
+    });
+
+    var geocoder = new google.maps.Geocoder();
+
+    $scope.contribute = function(story){
+      $location.url('/stories/' + story.id + '/contributions/new');
+    }
+
+    $scope.completeStories = function(){
+      $scope.completedFilter = {completed: true}
+      updateStoryMarkers();
+    }
+
+    $scope.incompleteStories = function(){
+      $scope.completedFilter = {completed: false}
+      updateStoryMarkers();
+    }
+
+    $scope.list = function(){
+        $scope.displayList = true
+    }
+
+    $scope.map = function(){
+        $scope.displayList = false
+    }
+
+    function updateStoryMarkers(){
+      Map.deleteMarkers();
+      Map.addStoryMarkers($scope.stories);
+    }
+
+    $scope.getStoriesNearLocation = function (address){
+      geocoder.geocode({'address': address}, function(results, status){
+
+        $scope.lat = results[0].geometry.location.A;
+        $scope.lng = results[0].geometry.location.F;
+        console.log("got coords for address: " + $scope.lat + ", " + $scope.lng)
+
+        Map.map.panTo(new google.maps.LatLng($scope.lat, $scope.lng));
+
+        Story.getNearby($scope.lat, $scope.lng)
+          .then(function(result){
+            console.log(result);
+            $scope.stories = result.data;
+            updateStoryMarkers();
+          }, function(error){
+            console.log("Got error trying to get nearby stories", error);
+          })
+          });
+    }
+  }]);

@@ -1,11 +1,7 @@
-<div id="search-field">Search: <input ng-model="query"></div>
-
 <ul class="stories">
-	<li ng-repeat="story in stories | filter:query">
-		<p>Title: {{story.title}}</p>
-		<p>Id: {{story.id}}</p>
-		<p>Contribution Limit: {{story.contribution_limit}}</p>
-		<p>Created: {{story.created_at}}</p>
+	<li ng-repeat="story in stories">
+		<ng-include src="'views/stories/story.html'"> </ng-include>
+		<button type="button" ng-click="contribute(story)">Contribute!</button>
 	</li>
 </ul>
 

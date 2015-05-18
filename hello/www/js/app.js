@@ -4,12 +4,12 @@ var corpseFaceApp = angular.module('corpseFaceApp', ['ngRoute'
 corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
 
   var url = 'https://corpsebook-server.herokuapp.com/'
-  // var url = 'http://192.168.0.2:3000/' 
+  // var url = 'http://192.168.0.2:3000/'
 
   var Story = function(config){
 
   }
-  
+
   var promisify = function(config){
     var request = $http(config)
     var deferred = $q.deferred = $q.defer();
@@ -63,7 +63,7 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
         url: url + 'stories/'+ id +'/contributions',
         data: contribution
       };
-      
+
       return promisify(config);
     },
 
@@ -197,6 +197,10 @@ corpseFaceApp.config(['$routeProvider',
         templateUrl: './views/stories/stories.html',
         controller: 'storiesCtrl'
       }).
+      when('/stories/search', {
+        templateUrl: './views/stories/search.html',
+        controller: 'searchCtrl'
+      }).
       when('/stories/:id', {
         templateUrl: './views/stories/story.html',
         controller: 'storyCtrl'
@@ -221,7 +225,7 @@ var app = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
 
-        document.addEventListener("DOMContentLoaded", function(event) { 
+        document.addEventListener("DOMContentLoaded", function(event) {
           // console.log('doc ready');
 
           // var latlng = new google.maps.LatLng(-34.397, 150.644);

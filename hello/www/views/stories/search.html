@@ -1,0 +1,35 @@
+<p>Search for Stories by Location</p>
+<div id="getStoriesNearLocationForm">
+<form name="getStoriesNearLocationForm" ng-submit="getStoriesNearLocation(address)" novalidate>
+<input id="title" type="text" name="title" ng-model="address" required />
+    <button type="submit"
+            ng-disabled="getStoriesNearLocationForm.$invalid">Search</button>
+  </form>
+</div>
+
+<div id="map_list">
+  <button type="button" ng-click="map()">Map</button>
+  <button type="button" ng-click="list()">List</button>
+</div>
+
+<div id="complete_incomplete">
+  <button type="button" ng-click="completeStories()">Complete</button>
+  <button type="button" ng-click="incompleteStories()">Incomplete</button>
+</div>
+
+<ul class="stories container">
+  <div id="list" ng-if="displayList">
+    <li ng-repeat="story in stories">
+      <ng-include src="'views/stories/story.html'"> </ng-include>
+      <button ng-if="!story.completed" type="button" ng-click="contribute(story)">Contribute!</button>
+    </li>
+  </div>
+
+  <div class="container">
+    <div id="map-canvas" ng-hide="displayList" >
+    </div>
+  </div>
+
+</ul>
+
+
