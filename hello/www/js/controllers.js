@@ -169,7 +169,7 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
       $scope.stories = result.data;
       Map.initMap();
       updateStoryMarkers();
-      google.maps.event.trigger(Map.map, "resize");
+
     }, function(error){
         console.log("Got error trying to get stories", error);
     });

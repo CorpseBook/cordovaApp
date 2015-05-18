@@ -117,7 +117,7 @@ corpseFaceApp.factory('Map', [ function(){
       };
 
       this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
+      google.maps.event.trigger(this.map, "resize");
     },
 
     addMarker: function(story){
