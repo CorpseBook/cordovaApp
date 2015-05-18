@@ -38,17 +38,16 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParam
         .then(function(result){
           $location.url('/stories/' + storyID );
         }, function(error){
-          console.log("Got error creating story: ", error);
+          console.log("Got error adding contribution: ", error);
         })
     }
 
   }])
 
-corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$http', '$location',
-  function ($scope, $http, $location) {
+corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$http', '$location', 'Story',
+  function ($scope, $http, $location, Story) {
 
-    $scope.story = {};
-    
+    $scope.story = {};    
 
     navigator.geolocation.getCurrentPosition(function(data){
       console.log("Got position: ", data);
@@ -61,25 +60,13 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$http', '$location',
       story = {story : story}
       story.story.lat = $scope.lat
       story.story.lng = $scope.lng
-      console.log(story);
 
-      var config =
-      {
-        method: 'POST',
-        url: url + 'stories',
-        data: story
-      };
-
-      $http(config)
-      .success(function (data)
-      {
-        console.log(data);
-        $location.url('/stories');
-      })
-      .error(function (data, status)
-      {
-        console.log('error');
-      });
+      Story.create(story)
+        .then(function(result){
+          $location.url('/stories');
+        }, function(error){
+          console.log("Got error creating story: ", error);
+        })
     }
 
   }])

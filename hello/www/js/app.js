@@ -65,6 +65,17 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
       };
       
       return promisify(config);
+    },
+
+    create: function(story){
+      var config =
+      {
+        method: 'POST',
+        url: url + 'stories',
+        data: story
+      };
+
+      return promisify(config);
     }
 
   }
