@@ -113,7 +113,7 @@ corpseFaceApp.factory('Map', [ function(){
 
     this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   }
-  
+
 
 
 
@@ -192,13 +192,13 @@ corpseFaceApp.config(['$routeProvider',
         templateUrl: './views/stories/stories.html',
         controller: 'storiesCtrl'
       }).
+      when('/stories/search', {
+        templateUrl: './views/stories/search.html',
+        controller: 'searchCtrl'
+      }).
       when('/stories/:id', {
         templateUrl: './views/stories/story.html',
         controller: 'storyCtrl'
-      }).
-      when('/stories/search', {
-        templateUrl: '.views/stories/search.html',
-        controller: 'searchCtrl'
       }).
       otherwise({
         redirectTo: '/nearby',
@@ -220,7 +220,7 @@ var app = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
 
-        document.addEventListener("DOMContentLoaded", function(event) { 
+        document.addEventListener("DOMContentLoaded", function(event) {
           // console.log('doc ready');
 
           // var latlng = new google.maps.LatLng(-34.397, 150.644);

@@ -158,8 +158,6 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
 }]);
 
 
-  }]);
-
 corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story',
   function ($scope, $location, Story){
 
@@ -167,11 +165,11 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story',
       var geocoder = new google.maps.Geocoder();
 
       $scope.list = function(){
-      $scope.displayList = true
+        $scope.displayList = true
     }
 
       $scope.map = function(){
-      $scope.displayList = false
+        $scope.displayList = false
     }
 
       Story.getStories()
@@ -195,5 +193,5 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story',
               console.log("Got error trying to get nearby stories", error);
             })
             });
-      }
+    }
   }]);
