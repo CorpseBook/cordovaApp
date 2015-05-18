@@ -102,8 +102,8 @@ corpseFaceApp.controller('storiesCtrl', ['$scope', '$location', 'Story',
   }]);
 
 
-corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
-  function ($scope, $location, Story) {
+corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
+  function ($scope, $location, Story, Map) {
 
     $scope.completedFilter = {completed: false};
 
@@ -116,12 +116,12 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
 
     $scope.completeStories = function(){
       $scope.completedFilter = {completed: true}
-      $scope.$broadcast('stories_update', $scope.stories)
+      updateStoryMarkers();
     }
 
     $scope.incompleteStories = function(){
       $scope.completedFilter = {completed: false}
-      $scope.$broadcast('stories_update', $scope.stories)
+      updateStoryMarkers();
     }
 
     $scope.list = function(){
@@ -132,19 +132,24 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
       $scope.displayList = false
     }
 
+    function updateStoryMarkers(){
+      Map.deleteMarkers();
+      Map.addStoryMarkers($scope.stories.filter(function(story){return story.completed == $scope.completedFilter.completed}));
+    }
+
     navigator.geolocation.getCurrentPosition(function(data){
       console.log("Got position: ", data);
       $scope.lat = data.coords.latitude
       $scope.lng = data.coords.longitude
 
       $scope.$broadcast('new_location', {lat: data.coords.latitude , lng: data.coords.longitude})
-
+      Map.map.panTo(new google.maps.LatLng($scope.lat, $scope.lng));
       // Story.getStories()
       Story.getNearby()
         .then(function(result){
           console.log(result);
           $scope.stories = result.data;
-          $scope.$broadcast('stories_update', $scope.stories)
+          updateStoryMarkers();
 
         }, function(error){
           console.log("Got error trying to get nearby stories", error);
@@ -152,26 +157,3 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
     });
 }]);
 
-
-
-corpseFaceApp.controller('mapCtrl', ['$scope', '$location', 'Map',
-  function ($scope, $location, Map) {
-
-
-    function updateStoryMarkers(){
-      Map.deleteMarkers();
-      Map.addStoryMarkers($scope.$parent.stories.filter(function(story){return story.completed == $scope.$parent.completedFilter.completed}));
-    }
-
-    $scope.$on('stories_update', function(e, stories){
-      console.log('got new stories broadcast: ', e);
-      updateStoryMarkers();
-    })
-
-
-    $scope.$on('new_location', function(e, data){
-      console.log('got boardcast: ', e);
-      Map.map.panTo(new google.maps.LatLng(data.lat, data.lng));
-    })
-  }
-]);
