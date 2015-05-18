@@ -85,7 +85,7 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
       var config =
       {
         method: 'POST',
-        url: url + 'nearby',
+        url: url + 'stories/nearby',
         data: data
       };
 
