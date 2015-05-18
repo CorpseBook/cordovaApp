@@ -42,7 +42,41 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
       };
 
       return promisify(config);
-    } 
+    },
+
+    getStories: function(){
+      var config =
+      {
+        method: 'GET',
+        url: url + 'stories',
+      };
+      return promisify(config);
+    },
+
+    addContribution: function(id, contribution){
+      contribution = {contribution : contribution}
+
+      var config =
+      {
+        method: 'POST',
+        url: url + 'stories/'+ id +'/contributions',
+        data: contribution
+      };
+      
+      return promisify(config);
+    },
+
+    create: function(story){
+      var config =
+      {
+        method: 'POST',
+        url: url + 'stories',
+        data: story
+      };
+
+      return promisify(config);
+    }
+
   }
 
   return new Story();
