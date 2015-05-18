@@ -9,7 +9,7 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParam
     $scope.contribution = {};
     $scope.story = {};
 
-    Story.getStory($routeParams.id)
+    Story.getStory(storyID)
       .then(function(result){
         $scope.story = result.data;
       }, 
