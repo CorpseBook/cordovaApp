@@ -52,7 +52,21 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
         url: url + 'stories',
       };
       return promisify(config);
-    } 
+    },
+
+    addContribution: function(id, contribution){
+      contribution = {contribution : contribution}
+
+      var config =
+      {
+        method: 'POST',
+        url: url + 'stories/'+ id +'/contributions',
+        data: contribution
+      };
+      
+      return promisify(config);
+    }
+
   }
 
 

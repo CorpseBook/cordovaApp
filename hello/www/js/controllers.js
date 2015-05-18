@@ -34,25 +34,12 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParam
 
     $scope.createContribution = function(contribution)
     {
-      contribution = {contribution : contribution}
-
-      var config =
-      {
-        method: 'POST',
-        url: url + 'stories/'+ $routeParams.id +'/contributions',
-        data: contribution
-      };
-
-      $http(config)
-      .success(function(data)
-      {
-        console.log(data);
-        $location.url('/stories/' + $routeParams.id );
-      })
-      .error(function(data, status)
-      {
-        console.log("error");
-      });
+      Story.addContribution(storyID, contribution)
+        .then(function(result){
+          $location.url('/stories/' + storyID );
+        }, function(error){
+          console.log("Got error creating story: ", error);
+        })
     }
 
   }])
@@ -110,7 +97,7 @@ corpseFaceApp.controller('storyCtrl', ['$scope', '$http', '$routeParams', 'Story
 
   }]);
 
-corpseFaceApp.controller('storiesCtrl', ['$scope', '$http', '$location', 'Story'
+corpseFaceApp.controller('storiesCtrl', ['$scope', '$http', '$location', 'Story',
   function ($scope, $http, $location, Story) {
 
     $scope.contribute = function(story){
@@ -123,7 +110,7 @@ corpseFaceApp.controller('storiesCtrl', ['$scope', '$http', '$location', 'Story'
     Story.getStories()
       .then(function(result){
         console.log(result)
-        $scope.stories = result;
+        $scope.stories = result.data;
       }, function(error){
         console.log("Got error trying to get stories", error);
       })
