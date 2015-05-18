@@ -155,23 +155,29 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
 }]);
 
 
-corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story',
+corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
   function ($scope, $location, Story, Map){
 
     $scope.stories = {};
     // $scope.completedFilter = {completed: true};
     $scope.displayList = true;
+    Map.initMap();
 
     Story.getStories()
     .then(function(result){
       console.log("got stories");
       console.log(result)
       $scope.stories = result.data;
+      updateStoryMarkers();
     }, function(error){
         console.log("Got error trying to get stories", error);
     });
 
     var geocoder = new google.maps.Geocoder();
+
+    $scope.contribute = function(story){
+      $location.url('/stories/' + story.id + '/contributions/new');
+    }
 
     $scope.completeStories = function(){
       $scope.completedFilter = {completed: true}
@@ -193,7 +199,7 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story',
 
     function updateStoryMarkers(){
       Map.deleteMarkers();
-      Map.addStoryMarkers($scope.stories.filter(function(story){return story.completed == $scope.completedFilter.completed}));
+      Map.addStoryMarkers($scope.stories);
     }
 
     $scope.getStoriesNearLocation = function (address){
@@ -203,13 +209,13 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story',
         $scope.lng = results[0].geometry.location.F;
         console.log("got coords for address: " + $scope.lat + ", " + $scope.lng)
 
-        // Map.map.panTo(new google.maps.LatLng($scope.lat, $scope.lng));
+        Map.map.panTo(new google.maps.LatLng($scope.lat, $scope.lng));
 
         Story.getNearby($scope.lat, $scope.lng)
           .then(function(result){
             console.log(result);
             $scope.stories = result.data;
-            // updateStoryMarkers();
+            updateStoryMarkers();
           }, function(error){
             console.log("Got error trying to get nearby stories", error);
           })
