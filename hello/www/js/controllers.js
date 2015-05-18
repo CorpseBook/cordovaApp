@@ -1,6 +1,3 @@
-var url = 'https://corpsebook-server.herokuapp.com/'
-// var url = 'http://192.168.0.2:3000/'
-
 corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParams', '$location', 'Story',
   function ($scope, $http, $routeParams, $location, Story) {
 
@@ -24,7 +21,7 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParam
 
       Story.isInRange(storyID, $scope.lat, $scope.lng)
         .then(function(result){
-          console.log(result);
+          // console.log(result);
           $scope.story.in_range = result.data.in_range
         }, function(error){
           console.log('Got error trying to get is in range: ', error)
@@ -96,7 +93,7 @@ corpseFaceApp.controller('storiesCtrl', ['$scope', '$http', '$location', 'Story'
 
     Story.getStories()
       .then(function(result){
-        console.log(result)
+        // console.log(result)
         $scope.stories = result.data;
       }, function(error){
         console.log("Got error trying to get stories", error);
