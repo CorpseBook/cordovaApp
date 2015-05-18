@@ -1,0 +1,28 @@
+<div id="complete_incomplete">
+	<button type="button" ng-click="completeStories()">Complete</button>
+	<button type="button" ng-click="incompleteStories()">Incomplete</button>
+</div>
+
+<div id="map_list">
+	<button type="button" ng-click="map()">Map</button>
+	<button type="button" ng-click="list()">List</button>
+</div>
+
+<ul class="stories">
+
+	<div id="list" ng-if="displayList">
+		<li ng-repeat="story in stories | filter: completedFilter ">
+			<ng-include src="'views/stories/story.html'"> </ng-include>
+			<button ng-if="!story.completed" type="button" ng-click="contribute(story)">Contribute!</button>
+		</li>
+	</div>
+
+	<div id="map" ng-if="!displayList">
+		MAP!
+	</div>
+
+
+</ul>
+
+
+

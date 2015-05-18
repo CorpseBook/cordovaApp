@@ -78,14 +78,14 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
       return promisify(config);
     },
 
-    nearby: function(lat, lng){
+    getNearby: function(lat, lng){
 
       var data = {search: {lat: lat, lng: lng}};
 
       var config =
       {
-        method: 'GET',
-        url: url + 'stories/nearby',
+        method: 'POST',
+        url: url + 'nearby',
         data: data
       };
 
@@ -125,9 +125,9 @@ corpseFaceApp.config(['$routeProvider',
         controller: 'storyCtrl'
       }).
       otherwise({
-        redirectTo: '/stories',
-        templateUrl: './views/stories/stories.html',
-        controller: 'storiesCtrl'
+        redirectTo: '/nearby',
+        templateUrl: './views/stories/nearby.html',
+        controller: 'nearbyCtrl'
       });
   }]);
 

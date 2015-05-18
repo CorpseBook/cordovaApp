@@ -1,5 +1,5 @@
-corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParams', '$location', 'Story',
-  function ($scope, $http, $routeParams, $location, Story) {
+corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$location', 'Story',
+  function ($scope, $routeParams, $location, Story) {
 
     var storyID = $routeParams.id;
 
@@ -41,8 +41,8 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$http', '$routeParam
 
   }])
 
-corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$http', '$location', 'Story',
-  function ($scope, $http, $location, Story) {
+corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story',
+  function ($scope, $location, Story) {
 
     $scope.story = {};    
 
@@ -68,8 +68,8 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$http', '$location', 'Sto
 
   }])
 
-corpseFaceApp.controller('storyCtrl', ['$scope', '$http', '$routeParams', 'Story',
-  function ($scope, $http, $routeParams, Story) {
+corpseFaceApp.controller('storyCtrl', ['$scope', '$routeParams', 'Story',
+  function ($scope, $routeParams, Story) {
 
     Story.getStory($routeParams.id)
       .then(function(result){
@@ -81,8 +81,8 @@ corpseFaceApp.controller('storyCtrl', ['$scope', '$http', '$routeParams', 'Story
 
   }]);
 
-corpseFaceApp.controller('storiesCtrl', ['$scope', '$http', '$location', 'Story',
-  function ($scope, $http, $location, Story) {
+corpseFaceApp.controller('storiesCtrl', ['$scope', '$location', 'Story',
+  function ($scope, $location, Story) {
 
     $scope.contribute = function(story){
       $location.url('/stories/' + story.id + '/contributions/new');
@@ -93,10 +93,59 @@ corpseFaceApp.controller('storiesCtrl', ['$scope', '$http', '$location', 'Story'
 
     Story.getStories()
       .then(function(result){
-        // console.log(result)
+        console.log(result)
         $scope.stories = result.data;
       }, function(error){
         console.log("Got error trying to get stories", error);
       })
+
+  }]);
+
+
+corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
+  function ($scope, $location, Story) {
+
+    $scope.completedFilter = {completed: false};
+
+    $scope.contribute = function(story){
+      $location.url('/stories/' + story.id + '/contributions/new');
+    }
+    $scope.create = function(){
+      $location.url('/stories/new' );
+    }
+
+    $scope.completeStories = function(){
+      $scope.completedFilter = {completed: true}
+    }
+
+    $scope.incompleteStories = function(){
+      $scope.completedFilter = {completed: false}
+    }
+
+    $scope.list = function(){
+      $scope.displayList = true
+    }
+
+    $scope.map = function(){
+      $scope.displayList = false
+    }
+
+
+
+    navigator.geolocation.getCurrentPosition(function(data){
+      console.log("Got position: ", data);
+      $scope.lat = data.coords.latitude
+      $scope.lng = data.coords.longitude
+
+      Story.getNearby()
+        .then(function(result){
+          console.log(result);
+          $scope.stories = result.data;
+        }, function(error){
+          console.log("Got error trying to get nearby stories", error);
+        })
+    });
+
+
 
   }]);

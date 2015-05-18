@@ -1,9 +1,9 @@
-<div id="Create Story">
+<!-- <div id="Create Story">
 	<button type="button" ng-click="create()">Create a story!</button>
-</div>
+</div> -->
 
 <ul class="stories">
-	<li ng-repeat="story in stories | filter:query">
+	<li ng-repeat="story in stories | filter: {completed: 0}">
 		<ng-include src="'views/stories/story.html'"> </ng-include>
 		<button type="button" ng-click="contribute(story)">Contribute!</button>
 	</li>
