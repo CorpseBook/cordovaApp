@@ -106,6 +106,7 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
   function ($scope, $location, Story, Map) {
 
     $scope.completedFilter = false;
+    Map.initMap();
 
     $scope.contribute = function(story){
       $location.url('/stories/' + story.id + '/contributions/new');
