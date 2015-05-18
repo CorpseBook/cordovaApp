@@ -130,8 +130,6 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
       $scope.displayList = false
     }
 
-
-
     navigator.geolocation.getCurrentPosition(function(data){
       console.log("Got position: ", data);
       $scope.lat = data.coords.latitude
@@ -145,7 +143,20 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story',
           console.log("Got error trying to get nearby stories", error);
         })
     });
+}]);
 
 
 
-  }]);
+corpseFaceApp.controller('mapCtrl', ['$scope', '$location',
+  function ($scope, $location) {
+
+    var latlng = new google.maps.LatLng(0,0);
+
+    var mapOptions = {
+      center: latlng,
+      zoom: 2
+    };
+    console.log("making map control")
+    $scope.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  }
+]);

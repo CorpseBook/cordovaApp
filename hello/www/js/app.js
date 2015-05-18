@@ -91,9 +91,6 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
 
       return promisify(config);
     }
-
-
-
   }
 
   return new Story();
@@ -131,6 +128,7 @@ corpseFaceApp.config(['$routeProvider',
       });
   }]);
 
+var map;
 var app = {
     // Application Constructor
     initialize: function() {
@@ -142,6 +140,19 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+
+        document.addEventListener("DOMContentLoaded", function(event) { 
+          // console.log('doc ready');
+
+          // var latlng = new google.maps.LatLng(-34.397, 150.644);
+
+          // var mapOptions = {
+          //   center: latlng,
+          //   zoom: 12
+          // };
+          // console.log("making map control")
+          // map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        });
 
     },
     // deviceready Event Handler
