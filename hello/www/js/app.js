@@ -2,12 +2,14 @@ var corpseFaceApp = angular.module('corpseFaceApp', ['ngRoute'
 ]);
 
 corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
-  // var func = function(){console.log("Making getStories service, scope is: ", $scope)};
- 
 
   var url = 'https://corpsebook-server.herokuapp.com/'
   // var url = 'http://192.168.0.2:3000/' 
 
+  var Story = function(config){
+
+  }
+  
   var promisify = function(config){
     var request = $http(config)
     var deferred = $q.deferred = $q.defer();
@@ -15,9 +17,6 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
     return deferred.promise;
   }
 
-  var Story = function(config){
-
-  }
 
   Story.prototype = {
     getStory : function(id){
@@ -45,7 +44,6 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
       return promisify(config);
     } 
   }
-
 
   return new Story();
 }])
