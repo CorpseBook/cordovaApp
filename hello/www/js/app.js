@@ -142,6 +142,9 @@ corpseFaceApp.factory('Map', [ function(){
       var bounds = new google.maps.LatLngBounds();
       for (var i = 0; i < stories.length; i++) {
         this.addMarker(stories[i]);
+      }
+
+      for (var i = 0; i < this.markers.length; i++) {
         bounds.extend(this.markers[i].getPosition());
       }
 
