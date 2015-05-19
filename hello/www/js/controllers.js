@@ -62,7 +62,7 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story',
 
       Story.create(story)
         .then(function(result){
-          $location.url('/stories');
+          $location.url('/stories/nearby');
         }, function(error){
           console.log("Got error creating story: ", error);
         })

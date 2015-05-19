@@ -195,24 +195,24 @@ corpseFaceApp.config(['$routeProvider',
         templateUrl: './views/stories/new_story.html',
         controller: 'storiesNewCtrl'
       }).
-      when('/stories/:id/contributions/new', {
-        templateUrl: './views/contributions/new.html',
-        controller: 'contributionNewCtrl'
-      }).
-      when('/stories', {
-        templateUrl: './views/stories/stories.html',
-        controller: 'storiesCtrl'
-      }).
       when('/stories/search', {
         templateUrl: './views/stories/search.html',
         controller: 'searchCtrl'
+      }).
+      when('/stories/nearby',{
+        templateUrl: './views/stories/nearby.html',
+        controller: 'nearbyCtrl'
       }).
       when('/stories/:id', {
         templateUrl: './views/stories/story.html',
         controller: 'storyCtrl'
       }).
+      when('/stories/:id/contributions/new', {
+        templateUrl: './views/contributions/new.html',
+        controller: 'contributionNewCtrl'
+      }).
       otherwise({
-        redirectTo: '/nearby',
+        redirectTo: '/stories/nearby',
         templateUrl: './views/stories/nearby.html',
         controller: 'nearbyCtrl'
       });
