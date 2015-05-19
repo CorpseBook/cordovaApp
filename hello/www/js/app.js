@@ -68,6 +68,7 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
     },
 
     create: function(story){
+      console.log(story)
       var config =
       {
         method: 'POST',
