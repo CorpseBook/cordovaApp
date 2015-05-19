@@ -20,7 +20,7 @@
           </div>
           <p class="desc">{{story.last_contribution.content}}</p>
           <div class="wrap">
-            <span class="pull-right" ng-if="!story.completed" type="button" ng-click="contribute(story)"><a class="btn btn_complete btn-s btn-contribution" >Contribute</a></span>
+            <button class="pull-right btn btn_complete btn-s btn-contribution" ng-if="!story.completed" type="button" ng-click="contribute(story)">Contribute</button>
           </div>
         </div>
       </li>
