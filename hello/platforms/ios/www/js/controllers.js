@@ -52,6 +52,8 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story',
       $scope.lng = data.coords.longitude
     });
 
+
+
     $scope.createNewStory = function (story)
     {
       story = {story : story}
@@ -68,16 +70,50 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story',
 
   }])
 
-corpseFaceApp.controller('storyCtrl', ['$scope', '$routeParams', 'Story',
-  function ($scope, $routeParams, Story) {
+corpseFaceApp.controller('storyCtrl', ['$scope', '$routeParams', '$location', 'Story',
+  function ($scope, $routeParams, $location, Story) {
+
+    $scope.story = {};
+    $scope.inRange = false;
+    $scope.completed = false;
+    $scope.contributions = {};
+
+    $scope.contribute = function(story){
+      navigator.geolocation.getCurrentPosition(function(data){
+      console.log("Got my position: ", data);
+      $scope.lat = data.coords.latitude
+      $scope.lng = data.coords.longitude
+
+      Story.isInRange($routeParams.id, $scope.lat, $scope.lng)
+      .then(function(result){
+        $scope.inRange = result.data.in_range;
+        if ($scope.inRange)
+        {
+          $location.url('/stories/' + story.id + '/contributions/new');
+        }
+        else
+        {
+          alert("You are not in range!");
+        }
+      },
+      function(error){
+        console.log(error);
+      })
+    });
+
+    }
 
     Story.getStory($routeParams.id)
       .then(function(result){
         $scope.story = result.data;
+        $scope.completed = $scope.story.completed;
+        $scope.contributions = $scope.story.all_contributions;
       },
       function(error){
         console.log('Got error trying to get story: ', error)
     })
+
+
 
   }]);
 
@@ -164,8 +200,6 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
 
     Story.getStories()
     .then(function(result){
-      console.log("got stories");
-      console.log(result)
       $scope.stories = result.data;
       Map.initMap();
       updateStoryMarkers();

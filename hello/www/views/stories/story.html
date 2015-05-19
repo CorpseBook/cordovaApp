@@ -1,5 +1,14 @@
-<div class="story">
-		<p>Title: {{story.title}}</p>
-		<p>Last Contribution: {{story.last_contribution.content}}</p>
-		<p>By: {{story.last_contribution.username}}</p>
-</div>
+  <div id="story">
+    <p>Title: {{story.title}}</p>
+  <div id="incompleteStoryDetails" ng-if="!completed">
+    <p>Last Contribution: {{story.last_contribution.content}}</p>
+    <p>By: {{story.last_contribution.username}}</p>
+    <button type="button" ng-click="contribute(story)">Contribute!</button>
+  </div>
+    <ul class="contributions container">
+    <div id="list" ng-if="completed">
+    <li ng-repeat="contribution in contributions">
+      <p>{{contribution.content}}, by {{contribution.username}}<p>
+    </li>
+  </div>
+  </div>
