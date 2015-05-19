@@ -1,11 +1,8 @@
-<p>Search for Stories by Location</p>
-<div id="getStoriesNearLocationForm">
 <form name="getStoriesNearLocationForm" ng-submit="getStoriesNearLocation(address)" novalidate>
 <input id="title" type="text" name="title" ng-model="address" required />
     <button type="submit"
             ng-disabled="getStoriesNearLocationForm.$invalid">Search</button>
   </form>
-</div>
 
 <div id="map_list">
   <button type="button" ng-click="map()">Map</button>
@@ -19,7 +16,7 @@
 
 <ul class="stories container">
   <div id="list" ng-if="displayList">
-    <li ng-repeat="story in stories">
+    <li ng-repeat="story in stories | filter: completedFilter ">
       <ng-include src="'views/stories/story.html'"> </ng-include>
       <button ng-if="!story.completed" type="button" ng-click="contribute(story)">Contribute!</button>
     </li>

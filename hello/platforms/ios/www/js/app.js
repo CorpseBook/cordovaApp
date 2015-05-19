@@ -117,7 +117,7 @@ corpseFaceApp.factory('Map', [ function(){
       };
 
       this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
+      google.maps.event.trigger(this.map, "resize");
     },
 
     addMarker: function(story){
@@ -139,9 +139,13 @@ corpseFaceApp.factory('Map', [ function(){
     },
 
     addStoryMarkers: function(stories){
+      var bounds = new google.maps.LatLngBounds();
       for (var i = 0; i < stories.length; i++) {
         this.addMarker(stories[i]);
+        bounds.extend(this.markers[i].getPosition());
       }
+
+      this.map.fitBounds(bounds);
     },
 
     // Sets the map on all markers in the array.

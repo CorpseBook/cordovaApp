@@ -159,16 +159,17 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
   function ($scope, $location, Story, Map){
 
     $scope.stories = {};
-    // $scope.completedFilter = {completed: true};
-    $scope.displayList = true;
-    Map.initMap();
+    $scope.completedFilter = false;
+    $scope.displayList = false;
 
     Story.getStories()
     .then(function(result){
       console.log("got stories");
       console.log(result)
       $scope.stories = result.data;
+      Map.initMap();
       updateStoryMarkers();
+
     }, function(error){
         console.log("Got error trying to get stories", error);
     });
@@ -180,12 +181,12 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
     }
 
     $scope.completeStories = function(){
-      $scope.completedFilter = {completed: true}
+      $scope.completedFilter = true;
       updateStoryMarkers();
     }
 
     $scope.incompleteStories = function(){
-      $scope.completedFilter = {completed: false}
+      $scope.completedFilter = false;
       updateStoryMarkers();
     }
 
@@ -199,7 +200,9 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
 
     function updateStoryMarkers(){
       Map.deleteMarkers();
-      Map.addStoryMarkers($scope.stories);
+      Map.addStoryMarkers($scope.stories.filter(function(story){
+        return story.completed == $scope.completedFilter
+      }));
     }
 
     $scope.getStoriesNearLocation = function (address){
