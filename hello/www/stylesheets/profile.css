@@ -1,3 +1,7 @@
+.content-wrapper {
+  padding: 1.8em !important;
+}
+
 .post-wrapper,.post-wrapper ul li {
   border: 1px #4FC3F7 solid;
   border-radius: 10px;
@@ -8,8 +12,6 @@
 	width: 100%;
 	background: #fff;
 	padding: 25px 0;
-	-webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
-	-moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
 }
 #user-profile{
@@ -38,7 +40,6 @@
 }
 
 /** profile nav links **/
-
 #profiletabs a {
     margin-left: 10px;
   	display: block;
@@ -48,10 +49,6 @@
   	background: #eae8db;
   	color: #666;
   	border: 1px solid #fff;
-  	-webkit-border-radius: 5px;
-  	-webkit-border-bottom-left-radius: 0;
-  	-moz-border-radius: 5px;
-  	-moz-border-radius-bottomleft: 0;
   	border-radius: 5px;
   	border-bottom-left-radius: 0;
   	border-bottom-right-radius: 0;
