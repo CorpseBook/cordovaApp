@@ -1,0 +1,78 @@
+
+<link rel="stylesheet" type="text/css" href="stylesheets/stories.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/new_story.css">
+<link rel="stylesheet" href="stylesheets/idangerous.swiper.css">
+<nav id="slideMenu">
+  <ul>
+    <li onClick="window.location.href = 'index.html';">
+      <div class="right"><span>Home</span></div>
+    </li>
+    <li onClick="window.location.href = 'stories.html';">
+      <div class="right"><span>Stories</span></div>
+    </li>
+    <li onClick="window.location.href = 'contribution.html';">
+      <div class="right"><span>Contributions</span></div>
+    </li>
+    <li onClick="window.location.href = 'profile.html';">
+      <div class="right"><span>Profile</span></div>
+    </li>
+  </ul>
+</nav>
+<header id="logo">
+  <div id="nav-button"></div>
+  <div class="logo">
+    <img src="images/bookicon.png">
+  </div>
+</header>
+<section id="main" >
+  <div class="content-wrapper">
+    <article>
+      <div class="post-wrapper noCursor">
+        <ul class="max-height">
+          <li>
+            <div class="desc-column">
+              <span id="story-title" class="title color-red">New Story</span>
+            </div>
+            <div class="desc-column">
+              <form class="frm form-control" name="newStoryForm" ng-submit="createNewStory(story)" novalidate>
+                <div class="group-form">
+                  <div class="cell-5 pull-left">
+                    <input type="text" name="story[title]" class="input-form" placeholder="Title of story" ng-model="story.title" required/>
+                  </div>
+                  <div class="cell-5 pull-right">
+                    <p>Location</p>
+                  </div>
+                  <div class='clear'></div>
+                </div>
+                <div class="group-form">
+                  <textarea cols="15" name="story[content]" placeholder="First Contribution" rows="5"  ng-model="story.contribution" required/></textarea>
+                </div>
+                <div class="group-form">
+                  <div class="form-control label-title">
+                    <label>Contribution Limit:</label>
+                  </div>
+                  <div class="form-control cell-5">
+                    <input type="text" name="story[contribution_limit]" class="input-form" ng-model="story.contribution_limit" required />
+  <!--                   <div id="slider">
+                      <a class="ui-slider-handle" href="#" style="left: 0%;">
+                        <label>
+                          <span class="row-left"></span> 0 <span class="row-right"></span>
+                        </label>
+                      </a>
+                    </div> -->
+                  </div>
+                </div>
+                <div class="group-form">
+                  <div class="form-control">
+                    <button class="btn-contribution" type="submit" ng-disabled="newStoryForm.$invalid">Create</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+

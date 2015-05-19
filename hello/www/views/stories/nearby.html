@@ -10,7 +10,7 @@
 
 <ul class="stories container">
 
-	<div id="list" ng-if="displayList">
+	<div id="list" ng-show="displayList">
 		<li ng-repeat="story in stories | filter: completedFilter ">
 			<ng-include src="'views/stories/story.html'"> </ng-include>
 			<button ng-if="!story.completed" type="button" ng-click="contribute(story)">Contribute!</button>

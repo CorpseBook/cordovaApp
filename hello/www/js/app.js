@@ -133,7 +133,7 @@ corpseFaceApp.factory('Map', [ function(){
       });
       google.maps.event.addListener(marker, 'click', function() {
 
-        
+
         window.location.href = marker.url;
       });
 
@@ -191,7 +191,7 @@ corpseFaceApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/stories/new', {
-        templateUrl: './views/stories/new.html',
+        templateUrl: './views/stories/new_story.html',
         controller: 'storiesNewCtrl'
       }).
       when('/stories/:id/contributions/new', {
