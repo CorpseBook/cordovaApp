@@ -52,6 +52,8 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story',
       $scope.lng = data.coords.longitude
     });
 
+
+
     $scope.createNewStory = function (story)
     {
       story = {story : story}
@@ -71,6 +73,9 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story',
 corpseFaceApp.controller('storyCtrl', ['$scope', '$routeParams', 'Story',
   function ($scope, $routeParams, Story) {
 
+    $scope.story = {};
+    $scope.contributionAvailable = false;
+
     Story.getStory($routeParams.id)
       .then(function(result){
         $scope.story = result.data;
@@ -78,6 +83,27 @@ corpseFaceApp.controller('storyCtrl', ['$scope', '$routeParams', 'Story',
       function(error){
         console.log('Got error trying to get story: ', error)
     })
+
+    navigator.geolocation.getCurrentPosition(function(data){
+      console.log("Got position: ", data);
+      $scope.lat = data.coords.latitude
+      $scope.lng = data.coords.longitude
+
+      Story.isInRange($routeParams.id, $scope.lat, $scope.lng)
+      .then(function(result){
+        console.log(result.data.in_range);
+        $scope.contributionAvailable = result.data.in_range;
+      },
+      function(error){
+        console.log(error);
+      })
+    });
+
+    $scope.postContribution = function (contribution)
+    {
+      contribution.story_id = $scope.story.id;
+      Story.addContribution($scope.story.id, contribution);
+    }
 
   }]);
 
