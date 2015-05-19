@@ -1,7 +1,7 @@
 @charset "iso-8859-9";
 @import url("normalize.css");
 @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700);
-/*@import url(https://raw.github.com/FortAwesome/Font-Awesome/master/docs/assets/css/font-awesome.min.css);*/
+@import url(https://raw.github.com/FortAwesome/Font-Awesome/master/docs/assets/css/font-awesome.min.css);
 
 
 /* --------------------------- Reset ------------------------------*/
@@ -210,6 +210,12 @@ header input[type="submit"]:hover {
 #slideMenu ul li i {
 	max-width:2em;
 	min-height:2em;
+}
+
+/* MAP RENDER */
+
+#map-canvas {
+	height: 500px;
 }
 
 /* --------------------------- Loader, Fixed BG ------------------------------*/
@@ -517,7 +523,7 @@ article p {
 		text-overflow: ellipsis;
 		word-wrap: break-word;
 		overflow: hidden;
-		max-height: 3.6em;
+		text-align: justify;
 		line-height: 1.2em;
 	}
 	i.more.bottom-right {
@@ -543,6 +549,10 @@ article p {
 		padding:1.40em 0.5em;
 	}
 
+	#map-canvas {
+		height:250px;
+	}
+
 }
 
 /* --------------------------- Tablets ------------------------------*/
@@ -566,6 +576,11 @@ article p {
 	#slideMenu ul li span {
 		padding-left:0.3em
 	}
+
+	#map-canvas {
+		height:300px;
+	}
+
 }
 										/* --------------------------- Hi-Res / Desktop ------------------------------*/
 
@@ -595,7 +610,7 @@ article p {
 	.photoFrame, .post-wrapper ul li, .gototop{cursor:pointer}
 	.post-wrapper.noCursor ul li, .photoFrame.noCursor{ cursor:auto}
 }
-										/* --------------------------- Orientation / Lanscape ------------------------------*/
+/* --------------------------- Orientation / Lanscape ------------------------------*/
 @media screen and (orientation:landscape) {
 	#slideMenu ul li span {
 		padding-left:0.3em
