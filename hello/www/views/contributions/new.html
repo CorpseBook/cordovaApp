@@ -1,4 +1,4 @@
-<p>Contribute to a Story</p>
+<!-- <p>Contribute to a Story</p>
 <p>Title: {{story.title}}</p>
 <p>Last Contribution: {{story.last_contribution.content}}</p>
 <p>By: {{story.last_contribution.username}}</p>
@@ -12,4 +12,32 @@
   <br />
   <button ng-show="story.in_range" type="submit"
           ng-disabled="newContribution.$invalid">Submit</button>
-</form>
+</form> -->
+
+<link rel="stylesheet" type="text/css" href="stylesheets/stories.css">
+<link rel="stylesheet" href="stylesheets/idangerous.swiper.css">
+
+<section id="main">
+  <div class="content-wrapper">
+    <article>
+      <div class="post-wrapper noCursor">
+        <ul class="max-height">
+          <li>
+            <div class="desc-column">
+              <span id="story-title" class="title color-red">{{story.title}}</span>
+              <span class="title color-red location"></span>
+            </div>
+            <div class="desc-column">
+              <p class="desc">{{story.last_contribution.content}}</p>
+              <form ng-submit="createContribution(contribution, storyId)" novalidate>
+                <textarea cols="15" name="content" placeholder="Content" rows="5" ng-model="contribution.content" >
+                </textarea>
+                <button class="btn-contribution" type="submit">Contribute</button>
+              </form>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
