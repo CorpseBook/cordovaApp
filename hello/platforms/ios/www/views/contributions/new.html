@@ -1,8 +1,7 @@
-<h3>Contribute to a Story<h3>
-
+<p>Contribute to a Story</p>
 <p>Title: {{story.title}}</p>
 <p>Last Contribution: {{story.last_contribution.content}}</p>
-<p>Story in range: {{story.in_range}} </p>
+<p>By: {{story.last_contribution.username}}</p>
 
 <form name="newContribution" ng-submit="createContribution(contribution, storyId)" novalidate>
   <label for="content">Content</label>
