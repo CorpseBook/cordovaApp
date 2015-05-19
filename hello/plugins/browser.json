@@ -1,0 +1,21 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.world.hello"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.world.hello"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.world.hello"
+        }
+    },
+    "dependent_plugins": {}
+}

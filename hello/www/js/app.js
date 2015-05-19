@@ -132,6 +132,8 @@ corpseFaceApp.factory('Map', [ function(){
         url: '#/stories/' + story.id
       });
       google.maps.event.addListener(marker, 'click', function() {
+
+        
         window.location.href = marker.url;
       });
 
