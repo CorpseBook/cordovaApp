@@ -35,7 +35,7 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$loc
     {
       Story.addContribution(storyID, contribution)
         .then(function(result){
-          $location.url('/stories/' + storyID );
+          $location.url('/stories/nearby');
         }, function(error){
           console.log("Got error adding contribution: ", error);
         })
