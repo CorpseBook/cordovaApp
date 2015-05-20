@@ -16,7 +16,7 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$loc
 
     Locator.getLocation()
       .then(function(location){
-        console.log("Got position: ", location);
+        // console.log("Got position: ", location);
         $scope.lat = location.coords.latitude
         $scope.lng = location.coords.longitude
 
@@ -50,7 +50,7 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story','Loca
 
     Locator.getLocation()
       .then(function(location){
-        console.log("Got position: ", location);
+        // console.log("Got position: ", location);
         $scope.lat = location.coords.latitude
         $scope.lng = location.coords.longitude
       })
@@ -105,6 +105,10 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map', '
       $location.url('/stories/' + story.id + '/contributions/new');
     }
 
+    $scope.viewComplete = function(story){
+      $location.url('/stories/' + story.id);
+    }
+
     $scope.completeStories = function(){
       $scope.completedFilter = true
       updateStoryMarkers();
@@ -137,7 +141,7 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map', '
         return Story.getNearby($scope.lat, $scope.lng)
       })
       .then(function(result){
-        console.log('Result is:', result);
+        // console.log('Result is:', result);
         $scope.stories = result.data;
         updateStoryMarkers();
 
@@ -173,6 +177,10 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
       $location.url('/stories/' + story.id + '/contributions/new');
     }
 
+    $scope.viewComplete = function(story){
+      $location.url('/stories/' + story.id);
+    }
+
     $scope.completeStories = function(){
       $scope.completedFilter = true;
       updateStoryMarkers();
@@ -203,13 +211,13 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
 
         $scope.lat = results[0].geometry.location.A;
         $scope.lng = results[0].geometry.location.F;
-        console.log("got coords for address: " + $scope.lat + ", " + $scope.lng)
+        // console.log("got coords for address: " + $scope.lat + ", " + $scope.lng)
 
         Map.map.panTo(new google.maps.LatLng($scope.lat, $scope.lng));
 
         Story.getNearby($scope.lat, $scope.lng)
           .then(function(result){
-            console.log(result);
+            // console.log(result);
             $scope.stories = result.data;
             updateStoryMarkers();
           }, function(error){

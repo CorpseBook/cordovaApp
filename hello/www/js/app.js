@@ -147,7 +147,6 @@ corpseFaceApp.factory('Map', [ 'Story', 'Locator', function(Story, Locator){
       console.log(story);
       var myLatlng = new google.maps.LatLng(story.location.lat, story.location.lng)
       var title = story.title
-      console.log(story.id)
       var marker = new google.maps.Marker({
         position: myLatlng,
         map: this.map,
