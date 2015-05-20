@@ -1,33 +1,24 @@
-
-
 <div class="content-wrapper">
   <div class="tabs">
     <div id="centered-menu">
-      <div class="search-container">
+      <div class="search-container pull-right">
           <form name="getStoriesNearLocationForm" ng-submit="getStoriesNearLocation(address)" novalidate>
             <input id="search" type="text" name="search" placeholder="Search Stories by Location" ng-model="address" required />
             <input id="search_submit" value="" type="submit">
           </form>
       </div>
+      <ng-include src="'views/stories/filterspartial.html'"> </ng-include>
     </div>
   </div>
-</div>
-
-<ng-include src="'views/stories/filterspartial.html'"> </ng-include>
-
-<ul class="stories container">
-
-  <div id="list" ng-show="displayList">
-    <li ng-repeat="story in stories | filter: completedFilter ">
-      <ng-include src="'views/stories/storypartial.html'"> </ng-include>
-    </li>
-  </div>
-  <div class="content-wrapper tab" role="tabable" id="completed" ng-show="!displayList">
-    <article>
+  <article>
+    <div class="post-wrapper noCursor" role="tabable" id="completed" ng-show="displayList" ng-repeat="story in stories | filter: completedFilter ">
+        <ng-include src="'views/stories/storypartial.html'"> </ng-include>
+    </div>
+  </article>
+  <article role="tabable" id="completed" ng-show="!displayList">
       <div class="post-wrapper noCursor">
         <div id="map-canvas"></div>
       </div>
     </article>
-  </div>
+</div>
 
-</ul>
