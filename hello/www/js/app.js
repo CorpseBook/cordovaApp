@@ -1,7 +1,7 @@
-var corpseFaceApp = angular.module('corpseFaceApp', ['ngRoute'
+var gretelApp = angular.module('gretelApp', ['ngRoute'
 ]);
 
-corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
+gretelApp.factory('Story', [ '$http', '$q', function($http, $q){
 
   var url = 'https://corpsebook-server.herokuapp.com/'
   // var url = 'http://192.168.0.2:3000/'
@@ -98,7 +98,7 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
   return new Story();
 }])
 
-corpseFaceApp.factory('Locator', ['$q', function($q){
+gretelApp.factory('Locator', ['$q', function($q){
   var Locator = function(){
 
   }
@@ -121,7 +121,7 @@ corpseFaceApp.factory('Locator', ['$q', function($q){
 
 }])
 
-corpseFaceApp.factory('Map', [ 'Story', 'Locator', function(Story, Locator){
+gretelApp.factory('Map', [ 'Story', 'Locator', function(Story, Locator){
 
   var Map = function(config){
     this.initMap();
@@ -226,13 +226,13 @@ corpseFaceApp.factory('Map', [ 'Story', 'Locator', function(Story, Locator){
   return new Map();
 }])
 
-corpseFaceApp.config(function($httpProvider)
+gretelApp.config(function($httpProvider)
   {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
   });
 
-corpseFaceApp.config(['$routeProvider',
+gretelApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/stories/new', {

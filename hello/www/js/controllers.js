@@ -1,4 +1,4 @@
-corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$location', 'Story', 'Locator',
+gretelApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$location', 'Story', 'Locator',
   function ($scope, $routeParams, $location, Story, Locator) {
 
     var storyID = $routeParams.id;
@@ -43,7 +43,7 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$loc
 
   }])
 
-corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story','Locator',
+gretelApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story','Locator',
   function ($scope, $location, Story, Locator) {
 
     $scope.story = {};
@@ -75,7 +75,7 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story','Loca
 
   }])
 
-corpseFaceApp.controller('storyCtrl', ['$scope', '$routeParams', '$location', 'Story', 'Locator',
+gretelApp.controller('storyCtrl', ['$scope', '$routeParams', '$location', 'Story', 'Locator',
   function ($scope, $routeParams, $location, Story, Locator) {
 
     $scope.story = {};
@@ -95,7 +95,7 @@ corpseFaceApp.controller('storyCtrl', ['$scope', '$routeParams', '$location', 'S
 
   }]);
 
-corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map', 'Locator',
+gretelApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map', 'Locator',
   function ($scope, $location, Story, Map, Locator) {
 
     $scope.completedFilter = false;
@@ -154,7 +154,7 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map', '
 }]);
 
 
-corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
+gretelApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
   function ($scope, $location, Story, Map){
 
     $scope.stories = {};
