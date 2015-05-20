@@ -12,8 +12,7 @@
   </div>
 </div>
 
-<ul class="stories container">
-
+<!-- <ul class="stories container">
   <div id="list" ng-show="displayList">
     <li ng-repeat="story in stories | filter: completedFilter ">
       <ng-include src="'views/stories/storypartial.html'"> </ng-include>
@@ -27,4 +26,19 @@
     </article>
   </div>
 
-</ul>
+</ul> -->
+
+<div class="content-wrapper tab" role="tabable" id="completed">
+  <article>
+    <div class="post-wrapper noCursor" role="tabable" id="completed" ng-show="displayList" ng-repeat="story in stories | filter: completedFilter ">
+      <ng-include src="'views/stories/storypartial.html'"> </ng-include>
+    </div>
+  </article>
+</div>
+  <div class="content-wrapper tab" role="tabable" id="completed" ng-show="!displayList">
+    <article>
+      <div class="post-wrapper noCursor">
+        <div id="map-canvas"></div>
+      </div>
+    </article>
+  </div>
