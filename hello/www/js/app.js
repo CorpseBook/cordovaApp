@@ -98,8 +98,30 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
   return new Story();
 }])
 
+corpseFaceApp.factory('Locator', ['$q', function($q){
+  var Locator = function(){
 
-corpseFaceApp.factory('Map', [ function(){
+  }
+
+  Locator.prototype = {
+    getLocation: function(){
+      return $q(function(resolve, reject){
+        if(navigator.geolocation){
+          navigator.geolocation.getCurrentPosition(function(position){
+            resolve(position);
+          })
+        }else{
+          reject("Unable to get geolocation")
+        }
+      })
+    }
+  }
+
+  return new Locator();
+
+}])
+
+corpseFaceApp.factory('Map', [ 'Story', function(Story){
 
   var Map = function(config){
     this.initMap();
@@ -109,6 +131,7 @@ corpseFaceApp.factory('Map', [ function(){
 
     initMap: function(){
       this.markers = [];
+      this.userLocation = {};
 
       var latlng = new google.maps.LatLng(0,0);
 
@@ -130,8 +153,15 @@ corpseFaceApp.factory('Map', [ function(){
         position: myLatlng,
         map: this.map,
         title: title,
-        url: '#/stories/' + story.id
+        // url: '#/stories/' + story.id
       });
+
+      // Story.in_range()
+
+      if(story.complete){
+        url = '#/stories/' + story.id
+      }
+
       google.maps.event.addListener(marker, 'click', function() {
 
 
