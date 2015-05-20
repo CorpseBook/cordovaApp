@@ -21,9 +21,15 @@
     </li>
   </div>
 
-  <div class="container">
-    <div id="map-canvas" ng-hide="displayList" >
-    </div>
+  <div class="content-wrapper tab" role="tabable" id="completed" ng-show="!displayList">
+    <article>
+      <div class="post-wrapper noCursor">
+            <div class="desc-column">
+              <div class="wrap">
+                <div id="map-canvas"></div>
+            </div>
+      </div>
+    </article>
   </div>
 
 </ul>
