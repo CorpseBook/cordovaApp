@@ -121,7 +121,7 @@ corpseFaceApp.factory('Locator', ['$q', function($q){
 
 }])
 
-corpseFaceApp.factory('Map', [ 'Story', function(Story){
+corpseFaceApp.factory('Map', [ 'Story', 'Locator', function(Story, Locator){
 
   var Map = function(config){
     this.initMap();
@@ -131,8 +131,7 @@ corpseFaceApp.factory('Map', [ 'Story', function(Story){
 
     initMap: function(){
       this.markers = [];
-      this.userLocation = {};
-
+      
       var latlng = new google.maps.LatLng(0,0);
 
       var mapOptions = {
@@ -153,35 +152,51 @@ corpseFaceApp.factory('Map', [ 'Story', function(Story){
         position: myLatlng,
         map: this.map,
         title: title,
-        // url: '#/stories/' + story.id
+        story: story
       });
 
-      // Story.in_range()
-
-      if(story.complete){
-        url = '#/stories/' + story.id
-      }
+      var Map = this;
 
       google.maps.event.addListener(marker, 'click', function() {
+        var story = marker.story;
 
-
-        window.location.href = marker.url;
+        Story.isInRange(story.id, Map.userLocation.lat, Map.userLocation.lng)
+        .then(function(result){
+          var inRange = result.data.in_range;
+          if(story.completed){
+            url = '#/stories/' + story.id
+          }else{
+            if(inRange){
+              url = '#/stories/' + story.id + '/contributions/new'
+            }else{
+              url = '#/nearby'
+              alert("You are not in range to contribute");
+            }
+          }           
+          window.location.href = url;
+        })
       });
 
       this.markers.push(marker)
     },
 
     addStoryMarkers: function(stories){
-      var bounds = new google.maps.LatLngBounds();
-      for (var i = 0; i < stories.length; i++) {
-        this.addMarker(stories[i]);
-      }
+      var Map = this;
 
-      for (var i = 0; i < this.markers.length; i++) {
-        bounds.extend(this.markers[i].getPosition());
-      }
+      Locator.getLocation().then(function(location){
+        Map.userLocation = {lat: location.coords.latitude, lng: location.coords.longitude};
 
-      this.map.fitBounds(bounds);
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < stories.length; i++) {
+          Map.addMarker(stories[i]);
+        }
+
+        for (var i = 0; i < Map.markers.length; i++) {
+          bounds.extend(Map.markers[i].getPosition());
+        }
+
+        Map.map.fitBounds(bounds);
+      })
     },
 
     // Sets the map on all markers in the array.
