@@ -2,26 +2,28 @@
 <link rel="stylesheet" href="stylesheets/idangerous.swiper.css">
 
 <section id="main">
-  <div class="content-wrapper">
-    <article>
-      <div class="post-wrapper noCursor">
-        <ul class="max-height">
-          <li>
-            <div class="desc-column">
-              <span id="story-title" class="title color-red">{{story.title}}</span>
-              <span class="title color-red location"></span>
-            </div>
-            <div class="desc-column">
-              <p class="desc">{{story.last_contribution.content}}</p>
-              <form ng-submit="createContribution(contribution, storyId)" novalidate>
-                <textarea cols="15" name="content" placeholder="Content" rows="5" ng-model="contribution.content" >
-                </textarea>
-                <button class="btn-contribution" type="submit">Contribute</button>
-              </form>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </article>
-  </div>
+	<div class="content-wrapper">
+		<article>
+			<div class="post-wrapper noCursor">
+				<ul class="max-height">
+					<li>
+						<div class="desc-column">
+							<span id="story-title" class="title color-red">{{story.title}}</span>
+							<span class="title color-red location"></span>
+						</div>
+						<div class="desc-column">
+							<p class="desc">{{story.last_contribution.content}}</p>
+							<form ng-submit="createContribution(contribution, storyId)" novalidate>
+								<textarea cols="15" name="content" placeholder="Your story" rows="5" ng-model="contribution.content" >
+								</textarea>                
+								<textarea cols="3" name="user" placeholder="Your name" rows="1" ng-model="contribution.username" >
+								</textarea>
+								<button class="btn-contribution" type="submit">Contribute</button>
+							</form>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</article>
+	</div>
 </section>
