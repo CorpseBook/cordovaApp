@@ -61,7 +61,6 @@ body {
 }
 
 header {
-	border-bottom: 1px solid #CCCCCC;
 	height:50px; line-height:50px;
 	background-color:#4FC3F7;
 	position:relative;
@@ -72,7 +71,7 @@ header #nav-button {
 	width:32px;
 	height:32px;
 	float:right;
-	background:url(../images/nav_settings.png) no-repeat;
+	background:url(../images/arrow.png) no-repeat;
   background-size: contain;
 	position:relative;
 	z-index:98;
@@ -89,74 +88,11 @@ header .logo img{
 }
 header .logo span{ position:absolute;  white-space:nowrap; padding-left:0.5px; color:#999; font-family: 'Lato'; }
 
-/* ------------ Search Bar ------------------*/
-/*#search {
-	width:50%;
+#nav-text {
+  color:white;
+  padding-left: 10px;
+  font-size: 30px;
 }
-
-.search-container{
-  width: 40%;
-  position: absolute;
-	left: 0;
-	right: 0;
-	margin: 0 auto;
-}
-
- header input[type="text"] {
-  height: 40px;
-  font-size: 20px;
-  display: inline-block;
-  font-family: "Lato";
-  font-weight: 300;
-  border: none;
-  outline: none;
-  padding: 3px;
-  padding-right: 60px;
-  width: 0px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: none;
-  z-index: 3;
-  transition: width .4s cubic-bezier(0.000, 0.795, 0.000, 1.000);
-  cursor: pointer;
-}
-
-header input[type="text"]:focus:hover {
-  border-bottom: 1px solid black;
-}
-
-header input[type="text"]:focus {
-	margin-right: 50px;
-  width: 700px;
-  z-index: 1;
-  border-bottom: 1px solid black;
-  cursor: text;
-}
-header input[type="submit"] {
-	margin: 5px 20px 0px 0px;
-  height: 40px;
-  width: 40px;
-  display: inline-block;
-  color:red;
-  float: right;
-  background:url(../images/search.svg) no-repeat;
-  background-size: contain;
-  text-indent: -10000px;
-  border: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 2;
-  cursor: pointer;
-  cursor: pointer;
-  transition: opacity .4s ease;
-}
-
-header input[type="submit"]:hover {
-  opacity: 0.8;
-}*/*/*/
-
 /* --------------------------- Slide Menu (Right Menu)------------------------------*/
 #slideMenu {
 	width:250px;
@@ -354,6 +290,7 @@ article p {
 	width: 100%;
 	margin-left: auto;
   margin-right: auto;
+
 }
 .post-wrapper:first-child {
 	margin-top:0
@@ -362,8 +299,6 @@ article p {
 	padding:0.5em;
 	margin:0 0 0.6em 0;
 	background-color:#f2f2f2;
-	-moz-background-clip: padding;
-	-webkit-background-clip: padding-box;
 	background-clip: padding-box;
 	position:relative;
 	zoom:1;
