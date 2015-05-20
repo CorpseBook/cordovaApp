@@ -1,5 +1,5 @@
-corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$location', 'Story',
-  function ($scope, $routeParams, $location, Story) {
+gretelApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$location', 'Story', 'Locator',
+  function ($scope, $routeParams, $location, Story, Locator) {
 
     var storyID = $routeParams.id;
 
@@ -14,26 +14,28 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$loc
         console.log('Got error trying to get story: ', error)
     })
 
-    navigator.geolocation.getCurrentPosition(function(data){
-      console.log("Got position: ", data);
-      $scope.lat = data.coords.latitude
-      $scope.lng = data.coords.longitude
+    Locator.getLocation()
+      .then(function(location){
+        // console.log("Got position: ", location);
+        $scope.lat = location.coords.latitude
+        $scope.lng = location.coords.longitude
 
-      Story.isInRange(storyID, $scope.lat, $scope.lng)
-        .then(function(result){
-          // console.log(result);
-          $scope.story.in_range = result.data.in_range
-        }, function(error){
-          console.log('Got error trying to get is in range: ', error)
-        })
-    });
+        return Story.isInRange(storyID, $scope.lat, $scope.lng)
 
+      })
+      .then(function(result){
+            // console.log(result);
+            $scope.story.in_range = result.data.in_range
+      })
+      .catch(function(error){
+            console.log('Got error trying to get is in range: ', error)
+      })
 
     $scope.createContribution = function(contribution)
     {
       Story.addContribution(storyID, contribution)
         .then(function(result){
-          $location.url('/stories/' + storyID );
+          $location.url('/stories/nearby');
         }, function(error){
           console.log("Got error adding contribution: ", error);
         })
@@ -41,17 +43,20 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$loc
 
   }])
 
-corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story',
-  function ($scope, $location, Story) {
+gretelApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story','Locator',
+  function ($scope, $location, Story, Locator) {
 
     $scope.story = {};
 
-    navigator.geolocation.getCurrentPosition(function(data){
-      console.log("Got position: ", data);
-      $scope.lat = data.coords.latitude
-      $scope.lng = data.coords.longitude
-    });
-
+    Locator.getLocation()
+      .then(function(location){
+        // console.log("Got position: ", location);
+        $scope.lat = location.coords.latitude
+        $scope.lng = location.coords.longitude
+      })
+      .catch(function(error){
+        alert("You need to allow locations!")
+      })
 
 
     $scope.createNewStory = function (story)
@@ -62,7 +67,7 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story',
 
       Story.create(story)
         .then(function(result){
-          $location.url('/stories');
+          $location.url('/stories/nearby');
         }, function(error){
           console.log("Got error creating story: ", error);
         })
@@ -70,38 +75,13 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story',
 
   }])
 
-corpseFaceApp.controller('storyCtrl', ['$scope', '$routeParams', '$location', 'Story',
-  function ($scope, $routeParams, $location, Story) {
+gretelApp.controller('storyCtrl', ['$scope', '$routeParams', '$location', 'Story', 'Locator',
+  function ($scope, $routeParams, $location, Story, Locator) {
 
     $scope.story = {};
     $scope.inRange = false;
     $scope.completed = false;
-    $scope.contributions = {};
-
-    $scope.contribute = function(story){
-      navigator.geolocation.getCurrentPosition(function(data){
-      console.log("Got my position: ", data);
-      $scope.lat = data.coords.latitude
-      $scope.lng = data.coords.longitude
-
-      Story.isInRange($routeParams.id, $scope.lat, $scope.lng)
-      .then(function(result){
-        $scope.inRange = result.data.in_range;
-        if ($scope.inRange)
-        {
-          $location.url('/stories/' + story.id + '/contributions/new');
-        }
-        else
-        {
-          alert("You are not in range!");
-        }
-      },
-      function(error){
-        console.log(error);
-      })
-    });
-
-    }
+    $scope.contributions = {};    
 
     Story.getStory($routeParams.id)
       .then(function(result){
@@ -113,39 +93,20 @@ corpseFaceApp.controller('storyCtrl', ['$scope', '$routeParams', '$location', 'S
         console.log('Got error trying to get story: ', error)
     })
 
-
-
   }]);
 
-corpseFaceApp.controller('storiesCtrl', ['$scope', '$location', 'Story',
-  function ($scope, $location, Story) {
-
-    $scope.contribute = function(story){
-      $location.url('/stories/' + story.id + '/contributions/new');
-    }
-    $scope.create = function(){
-      $location.url('/stories/new' );
-    }
-
-    Story.getStories()
-      .then(function(result){
-        console.log(result)
-        $scope.stories = result.data;
-      }, function(error){
-        console.log("Got error trying to get stories", error);
-      })
-
-  }]);
-
-
-corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
-  function ($scope, $location, Story, Map) {
+gretelApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map', 'Locator',
+  function ($scope, $location, Story, Map, Locator) {
 
     $scope.completedFilter = false;
     Map.initMap();
 
     $scope.contribute = function(story){
       $location.url('/stories/' + story.id + '/contributions/new');
+    }
+
+    $scope.viewComplete = function(story){
+      $location.url('/stories/' + story.id);
     }
 
     $scope.completeStories = function(){
@@ -171,27 +132,29 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map',
       Map.addStoryMarkers($scope.stories.filter(function(story){return story.completed == $scope.completedFilter}));
     }
 
-    navigator.geolocation.getCurrentPosition(function(data){
+    Locator.getLocation()
+      .then(function(location){
+        $scope.lat = location.coords.latitude
+        $scope.lng = location.coords.longitude
 
-      $scope.lat = data.coords.latitude
-      $scope.lng = data.coords.longitude
+        Map.map.panTo(new google.maps.LatLng($scope.lat, $scope.lng));
+        return Story.getNearby($scope.lat, $scope.lng)
+      })
+      .then(function(result){
+        // console.log('Result is:', result);
+        $scope.stories = result.data;
+        updateStoryMarkers();
 
-      Map.map.panTo(new google.maps.LatLng($scope.lat, $scope.lng));
+      })
+      .catch(function(error){
+        console.log("Got error trying to get nearby stories", error);
+      })
 
-      Story.getNearby($scope.lat, $scope.lng)
-        .then(function(result){
-
-          $scope.stories = result.data;
-          updateStoryMarkers();
-
-        }, function(error){
-          console.log("Got error trying to get nearby stories", error);
-        })
-    });
+      
 }]);
 
 
-corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
+gretelApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
   function ($scope, $location, Story, Map){
 
     $scope.stories = {};
@@ -212,6 +175,10 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
 
     $scope.contribute = function(story){
       $location.url('/stories/' + story.id + '/contributions/new');
+    }
+
+    $scope.viewComplete = function(story){
+      $location.url('/stories/' + story.id);
     }
 
     $scope.completeStories = function(){
@@ -244,18 +211,18 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
 
         $scope.lat = results[0].geometry.location.A;
         $scope.lng = results[0].geometry.location.F;
-        console.log("got coords for address: " + $scope.lat + ", " + $scope.lng)
+        // console.log("got coords for address: " + $scope.lat + ", " + $scope.lng)
 
         Map.map.panTo(new google.maps.LatLng($scope.lat, $scope.lng));
 
         Story.getNearby($scope.lat, $scope.lng)
           .then(function(result){
-            console.log(result);
+            // console.log(result);
             $scope.stories = result.data;
             updateStoryMarkers();
           }, function(error){
             console.log("Got error trying to get nearby stories", error);
           })
-          });
+        });
     }
   }]);

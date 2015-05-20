@@ -69,21 +69,23 @@ header {
 	padding:0.5em 0 0.5em 0
 }
 header #nav-button {
-	width:40px;
-	height:40px;
+	width:32px;
+	height:32px;
 	float:right;
-	background:url(../images/settings.svg) no-repeat;
+	background:url(../images/nav_settings.png) no-repeat;
   background-size: contain;
 	position:relative;
 	z-index:98;
 	cursor:pointer;
-	margin: 5px 10px 0px 0px;
+	margin: 8px 15px 0px 0px;
 }
 header .logo {
 	padding-left:0.5em;
+	margin: 5px 15px 0px 5px;
 }
 header .logo img{
-	width: 50px;
+	width: 40px;
+	height: 40px;
 }
 header .logo span{ position:absolute;  white-space:nowrap; padding-left:0.5px; color:#999; font-family: 'Lato'; }
 

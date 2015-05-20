@@ -136,10 +136,13 @@ ul.show-hide > li > div.desc-column > p.desc {
    background:#4FC3F7;
 
 }
-.post-wrapper ul li{
-  border-radius: 10px !important;
-}
 
+.post-wrapper ul li span.title {
+  padding-bottom: 10px;
+}
+span.pull-right.title.color-red.location {
+  padding-top: 10px;
+}
 /* End tab menu */
 
 @media only screen and (max-width: 767px) {
@@ -152,7 +155,7 @@ ul.show-hide > li > div.desc-column > p.desc {
 @media only screen and (max-width: 460px) {
 	.search-container { left: 23%; }
 }
-@media only screen and (max-width: 610px) {
+@media only screen and (max-width: 650px) {
   #centered-menu {
     max-width:280px !important;
   }
@@ -164,8 +167,77 @@ ul.show-hide > li > div.desc-column > p.desc {
     border:2px solid #4FC3F7;
   }
 }
-@media only screen and (max-width: 1170px){
+
+@media only screen and (max-width: 1210px){
   #centered-menu {
     max-width:570px;
+  }
+}
+
+
+
+/* ------------------------------------------------------------ *\
+|* ------------------------------------------------------------ *|
+|* Testing
+|* ------------------------------------------------------------ *|
+\* ------------------------------------------------------------ */
+.main-story .container-story {
+  padding: 0 100px 0 0;
+  overflow: hidden;
+}
+.main-story{
+  background:#f2f2f2;
+  margin-top: 15px;
+}
+
+.content-story {
+  float: left;
+  width: 100%;
+}
+.sidebar {
+  padding-top: 10px;
+  float: right;
+  margin-right: -100px;
+  width: 100px;
+  background-color: #4FC3F7;
+  /*background-image: url(../images/add-contribution.png);*/
+}
+.content-story,
+.sidebar {
+  padding-bottom: 99999px;
+  margin-bottom: -99999px;
+}
+section{
+  padding: 20px;
+}
+.sidebar img{
+  width: 80px;
+}
+
+@media all and (max-width: 840px) {
+  .main-story .container-story {
+    padding: 0;
+    overflow: visible;
+  }
+  .content-story {
+    float: none;
+  }
+  .sidebar {
+    float: none;
+    margin-right: 0;
+    width: 100%;
+    background-color: #4FC3F7;
+  }
+  .sidebar img{
+    width: 30px;
+  }
+  .content-story,
+  .sidebar {
+    padding-bottom: 10px;
+    margin-bottom: 0;
+  }
+  section {
+    padding: 10px 20px 0 20px;
+    text-align: justify;
   }
 }

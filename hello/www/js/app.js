@@ -1,7 +1,7 @@
-var corpseFaceApp = angular.module('corpseFaceApp', ['ngRoute'
+var gretelApp = angular.module('gretelApp', ['ngRoute'
 ]);
 
-corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
+gretelApp.factory('Story', [ '$http', '$q', function($http, $q){
 
   var url = 'https://corpsebook-server.herokuapp.com/'
   // var url = 'http://192.168.0.2:3000/'
@@ -98,8 +98,30 @@ corpseFaceApp.factory('Story', [ '$http', '$q', function($http, $q){
   return new Story();
 }])
 
+gretelApp.factory('Locator', ['$q', function($q){
+  var Locator = function(){
 
-corpseFaceApp.factory('Map', [ function(){
+  }
+
+  Locator.prototype = {
+    getLocation: function(){
+      return $q(function(resolve, reject){
+        if(navigator.geolocation){
+          navigator.geolocation.getCurrentPosition(function(position){
+            resolve(position);
+          })
+        }else{
+          reject("Unable to get geolocation")
+        }
+      })
+    }
+  }
+
+  return new Locator();
+
+}])
+
+gretelApp.factory('Map', [ 'Story', 'Locator', function(Story, Locator){
 
   var Map = function(config){
     this.initMap();
@@ -109,7 +131,7 @@ corpseFaceApp.factory('Map', [ function(){
 
     initMap: function(){
       this.markers = [];
-
+      
       var latlng = new google.maps.LatLng(0,0);
 
       var mapOptions = {
@@ -125,33 +147,55 @@ corpseFaceApp.factory('Map', [ function(){
       console.log(story);
       var myLatlng = new google.maps.LatLng(story.location.lat, story.location.lng)
       var title = story.title
-      console.log(story.id)
       var marker = new google.maps.Marker({
         position: myLatlng,
         map: this.map,
         title: title,
-        url: '#/stories/' + story.id
+        story: story
       });
+
+      var Map = this;
+
       google.maps.event.addListener(marker, 'click', function() {
+        var story = marker.story;
 
-
-        window.location.href = marker.url;
+        Story.isInRange(story.id, Map.userLocation.lat, Map.userLocation.lng)
+        .then(function(result){
+          var inRange = result.data.in_range;
+          if(story.completed){
+            url = '#/stories/' + story.id
+          }else{
+            if(inRange){
+              url = '#/stories/' + story.id + '/contributions/new'
+            }else{
+              url = '#/nearby'
+              alert("You are not in range to contribute");
+            }
+          }           
+          window.location.href = url;
+        })
       });
 
       this.markers.push(marker)
     },
 
     addStoryMarkers: function(stories){
-      var bounds = new google.maps.LatLngBounds();
-      for (var i = 0; i < stories.length; i++) {
-        this.addMarker(stories[i]);
-      }
+      var Map = this;
 
-      for (var i = 0; i < this.markers.length; i++) {
-        bounds.extend(this.markers[i].getPosition());
-      }
+      Locator.getLocation().then(function(location){
+        Map.userLocation = {lat: location.coords.latitude, lng: location.coords.longitude};
 
-      this.map.fitBounds(bounds);
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < stories.length; i++) {
+          Map.addMarker(stories[i]);
+        }
+
+        for (var i = 0; i < Map.markers.length; i++) {
+          bounds.extend(Map.markers[i].getPosition());
+        }
+
+        Map.map.fitBounds(bounds);
+      })
     },
 
     // Sets the map on all markers in the array.
@@ -182,37 +226,37 @@ corpseFaceApp.factory('Map', [ function(){
   return new Map();
 }])
 
-corpseFaceApp.config(function($httpProvider)
+gretelApp.config(function($httpProvider)
   {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
   });
 
-corpseFaceApp.config(['$routeProvider',
+gretelApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/stories/new', {
         templateUrl: './views/stories/new_story.html',
         controller: 'storiesNewCtrl'
       }).
-      when('/stories/:id/contributions/new', {
-        templateUrl: './views/contributions/new.html',
-        controller: 'contributionNewCtrl'
-      }).
-      when('/stories', {
-        templateUrl: './views/stories/stories.html',
-        controller: 'storiesCtrl'
-      }).
       when('/stories/search', {
         templateUrl: './views/stories/search.html',
         controller: 'searchCtrl'
+      }).
+      when('/stories/nearby',{
+        templateUrl: './views/stories/nearby.html',
+        controller: 'nearbyCtrl'
       }).
       when('/stories/:id', {
         templateUrl: './views/stories/story.html',
         controller: 'storyCtrl'
       }).
+      when('/stories/:id/contributions/new', {
+        templateUrl: './views/contributions/new.html',
+        controller: 'contributionNewCtrl'
+      }).
       otherwise({
-        redirectTo: '/nearby',
+        redirectTo: '/stories/nearby',
         templateUrl: './views/stories/nearby.html',
         controller: 'nearbyCtrl'
       });

@@ -18,6 +18,7 @@ input.input-form {
 }
 
 form.form-control {
+  margin: 0 0 10px 0;
   padding-top: 1em;
 }
 
@@ -28,11 +29,7 @@ form.form-control {
   width: 49%;
 }
 
-.form-control {
-  margin: 0 0 10px 0;
-}
-
-form.frm > .group-form:last-child {
+form.form-control > .group-form:last-child {
   margin-top: 40px;
 }
 
@@ -71,20 +68,10 @@ label {
   z-index: 2;
   width: 5.2em;
   margin: -18px -50px;
-  /*-18px -45px*/
   text-align: center;
   line-height: 35px;
   color: #FFFFFF;
   font-size: 15px;
-}
-
-.price-slider span {
-  font-weight: 200;
-  display: inline-block;
-}
-
-.ui-slider-handle {
-  width: 5.2em;
 }
 
 .row-left, .row-right {
@@ -105,7 +92,6 @@ label {
     padding: 5px 5px 0 5px;
   }
   .ui-slider {
-    /*margin: 30px 0 0 0;*/
     width: 86.5%;
   }
 }
