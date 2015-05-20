@@ -20,18 +20,16 @@ corpseFaceApp.controller('contributionNewCtrl', ['$scope', '$routeParams', '$loc
         $scope.lat = location.coords.latitude
         $scope.lng = location.coords.longitude
 
-        Story.isInRange(storyID, $scope.lat, $scope.lng)
-          .then(function(result){
+        return Story.isInRange(storyID, $scope.lat, $scope.lng)
+
+      })
+      .then(function(result){
             // console.log(result);
             $scope.story.in_range = result.data.in_range
-          }, function(error){
+      })
+      .catch(function(error){
             console.log('Got error trying to get is in range: ', error)
-          })
-
-      }, function(error){
-        alert("You need to allow locations!")
-      });
-
+      })
 
     $scope.createContribution = function(contribution)
     {
@@ -55,10 +53,10 @@ corpseFaceApp.controller('storiesNewCtrl', ['$scope', '$location', 'Story','Loca
         console.log("Got position: ", location);
         $scope.lat = location.coords.latitude
         $scope.lng = location.coords.longitude
-      }, function(error){
+      })
+      .catch(function(error){
         alert("You need to allow locations!")
-      });
-
+      })
 
 
     $scope.createNewStory = function (story)
@@ -136,20 +134,19 @@ corpseFaceApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map', '
         $scope.lng = location.coords.longitude
 
         Map.map.panTo(new google.maps.LatLng($scope.lat, $scope.lng));
+        return Story.getNearby($scope.lat, $scope.lng)
+      })
+      .then(function(result){
+        console.log('Result is:', result);
+        $scope.stories = result.data;
+        updateStoryMarkers();
 
-        Story.getNearby($scope.lat, $scope.lng)
-          .then(function(result){
+      })
+      .catch(function(error){
+        console.log("Got error trying to get nearby stories", error);
+      })
 
-            $scope.stories = result.data;
-            updateStoryMarkers();
-
-          }, function(error){
-            console.log("Got error trying to get nearby stories", error);
-          })
-
-      }, function(error){
-        alert("You need to allow locations!")
-      });
+      
 }]);
 
 
@@ -218,6 +215,6 @@ corpseFaceApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
           }, function(error){
             console.log("Got error trying to get nearby stories", error);
           })
-          });
+        });
     }
   }]);
