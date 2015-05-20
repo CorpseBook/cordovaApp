@@ -6,9 +6,7 @@
   border-radius: 10px;
   height: 35px;
 }
-
 #centered-menu .search-container input#search_submit {
-  /*height:36px;*/
   width:10%;
 }
 #centered-menu .search-container input#search {
@@ -25,18 +23,15 @@
   background-repeat: no-repeat;
   background-size: 50%;
 }
-
 #centered-menu .search-container input#search:focus {
   border-radius: 9px 0 0 9px;
   background: #DDD;
   color: #222;
   outline: 0;
 }
-
 @media only screen and (max-width: 460px) {
   .search-container { height:100%; }
 }
-
 @media only screen and (max-width: 1170px) {
   .search-container {
     width: 97%;
@@ -46,7 +41,6 @@
     background-size: 60%;
   }
 }
-
 @media only screen and (max-width: 650px) {
   .search-container {
     width: 98% !important;
