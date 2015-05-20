@@ -11,9 +11,15 @@ input.input-form {
   padding: 6px 15px;
   background-color: #fff;
 }
+.label-title{
+  padding: 15px 0;
+}
+.contribution_limit .cell-5{
+  width: 5% !important;
+}
 
 .btn-contribution{
-  width:150px !important;
+  /*width:150px !important;*/
   float: right;
 }
 
