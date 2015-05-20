@@ -1,14 +1,17 @@
-<div class="search-container>
-<form name="getStoriesNearLocationForm" ng-submit="getStoriesNearLocation(address)" novalidate>
-<input id="search" type="text" name="search" ng-model="address" required />
-    <button id="search_submit" type="submit"
-            ng-disabled="getStoriesNearLocationForm.$invalid">Search</button>
-  </form>
-</div>
-<!--           <div class="search-container pull-right">
-            <input id="search" name="search" type="text" placeholder="search bar">
+<link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+
+<div class="content-wrapper">
+  <div class="tabs">
+    <div id="centered-menu">
+      <div class="search-container">
+          <form name="getStoriesNearLocationForm" ng-submit="getStoriesNearLocation(address)" novalidate>
+            <input id="search" type="text" name="search" placeholder="Search Stories by Location" ng-model="address" required />
             <input id="search_submit" value="" type="submit">
-          </div> -->
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <ng-include src="'views/stories/filterspartial.html'"> </ng-include>
 
@@ -32,14 +35,3 @@
   </div>
 
 </ul>
-
-
-<div class="clear"></div>
-
-
-
-
-
-</ul>
-
-
