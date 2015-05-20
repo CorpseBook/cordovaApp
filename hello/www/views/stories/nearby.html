@@ -1,0 +1,29 @@
+<ng-include src="'views/stories/filterspartial.html'"> </ng-include>
+
+<ul class="stories container">
+
+	<div id="list" ng-show="displayList">
+		<li ng-repeat="story in stories | filter: completedFilter ">
+			<ng-include src="'views/stories/storypartial.html'"> </ng-include>
+		</li>
+	</div>
+	<div class="content-wrapper tab" role="tabable" id="completed" ng-show="!displayList">
+	  <article>
+	    <div class="post-wrapper noCursor">
+	    	<div id="map-canvas"></div>
+<!-- 	          <div class="desc-column">
+	            <div class="wrap">
+
+	          </div> -->
+	    </div>
+	  </article>
+	</div>
+
+</ul>
+
+
+<div class="clear"></div>
+
+
+
+

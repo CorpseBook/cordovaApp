@@ -5,6 +5,20 @@
     },
     "config_munge": {
         "files": {
+            "AndroidManifest.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
             "res/xml/config.xml": {
                 "parents": {
                     "/*": [
@@ -18,6 +32,12 @@
         }
     },
     "installed_plugins": {
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.world.hello"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.world.hello"
+        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.world.hello"
         }

@@ -1,16 +1,29 @@
-<h3>Contribute to a Story<h3>
+<link rel="stylesheet" type="text/css" href="stylesheets/stories.css">
+<link rel="stylesheet" href="stylesheets/idangerous.swiper.css">
 
-<p>Title: {{story.title}}</p>
-<p>Last Contribution: {{story.last_contribution.content}}</p>
-<p>Story in range: {{story.in_range}} </p>
-
-<form name="newContribution" ng-submit="createContribution(contribution, storyId)" novalidate>
-  <label for="content">Content</label>
-  <textarea id="content" name="content" ng-model="contribution.content" required></textarea><br />
-  <br />
-  <label for="storyId">User name</label>
-  <input id="storyId" type="text" ng-model="contribution.username" name="username" required></textarea><br />
-  <br />
-  <button ng-show="story.in_range" type="submit"
-          ng-disabled="newContribution.$invalid">Submit</button>
-</form>
+<section id="main">
+	<div class="content-wrapper">
+		<article>
+			<div class="post-wrapper noCursor">
+				<ul class="max-height">
+					<li>
+						<div class="desc-column">
+							<span id="story-title" class="title color-red">{{story.title}}</span>
+							<span class="title color-red location"></span>
+						</div>
+						<div class="desc-column">
+							<p class="desc">{{story.last_contribution.content}}</p>
+							<form ng-submit="createContribution(contribution, storyId)" novalidate>
+								<textarea cols="15" name="content" placeholder="Your story" rows="5" ng-model="contribution.content" >
+								</textarea>                
+								<textarea cols="3" name="user" placeholder="Your name" rows="1" ng-model="contribution.username" >
+								</textarea>
+								<button class="btn-contribution" type="submit">Contribute</button>
+							</form>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</article>
+	</div>
+</section>

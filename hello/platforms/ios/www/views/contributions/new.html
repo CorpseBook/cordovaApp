@@ -1,12 +1,15 @@
-<h3>Contribute to a Story<h3>
+<p>Contribute to a Story</p>
+<p>Title: {{story.title}}</p>
+<p>Last Contribution: {{story.last_contribution.content}}</p>
+<p>By: {{story.last_contribution.username}}</p>
+
 <form name="newContribution" ng-submit="createContribution(contribution, storyId)" novalidate>
   <label for="content">Content</label>
   <textarea id="content" name="content" ng-model="contribution.content" required></textarea><br />
   <br />
-  <label for="storyId">StoryId</label>
-  <input id="storyId" type="text" ng-model="storyId" name="storyId" required></textarea><br />
+  <label for="storyId">User name</label>
+  <input id="storyId" type="text" ng-model="contribution.username" name="username" required></textarea><br />
   <br />
-
-  <button type="submit"
+  <button ng-show="story.in_range" type="submit"
           ng-disabled="newContribution.$invalid">Submit</button>
 </form>
