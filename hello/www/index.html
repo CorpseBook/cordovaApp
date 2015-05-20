@@ -10,7 +10,8 @@
         <link rel="icon" type="image/x-icon" href="images/book-icon.gif">
         <link href="stylesheets/custom.css" rel="stylesheet" type="text/css">
         <link href="stylesheets/contribution.css" rel="stylesheet" type="text/css">
-
+        <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+        <link rel="stylesheet" href="stylesheets/idangerous.swiper.css">
         <script src="js/angular.js"></script>
         <script src="js/angular-resource.js"></script>
         <script src="js/angular-route.js"></script>
@@ -26,7 +27,7 @@
           <div class="right"><span>New</span></div>
         </li>
         <li onClick="window.location.href = '#/stories/search';">
-          <div class="right"><span>Search by location</span></div>
+          <div class="right"><span>Search by Location</span></div>
         </li>
       </ul>
     </nav>
@@ -37,10 +38,11 @@
         <span id='nav-text'>Gretel.</span>
       </div>
     </header>
-
+    <section id="main">
       <div ng-view class="container">
 
       </div>
+    </section>
         <script src="js/vendor/jquery-2.0.3.min.js"></script>
         <script src="js/vendor/jquery-migrate-1.2.1.min.js"></script>
         <script src="js/jquery.fittext.js"></script>
