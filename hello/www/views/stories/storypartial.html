@@ -2,14 +2,14 @@
 <p>Last Contribution: {{story.last_contribution.content}}</p>
 <p>By: {{story.last_contribution.username}}</p> -->
 
-<article>
+<!-- <article>
   <div class="post-wrapper noCursor">
     <ul class="show-hide max-height">
       <li>
         <i class="more bottom-left open-1"></i>
         <div class="left-column">
           <div class="wrap">
-          <!--   <img src="images/add-contribution.png" style="max-width:100px;"> -->
+
           </div>
         </div>
 	        <div class="desc-column">
@@ -28,4 +28,33 @@
       </li>
     </ul>
   </div>
-</article>
+</article> -->
+
+
+  <div class="content-wrapper tab" role="tabable" id="completed">
+    <article>
+      <div class="post-wrapper noCursor">
+        <div class="main-story">
+          <div class="container-story clearfix">
+            <div class="content-story">
+              <section>
+                <div class="wrap">
+                  <span class="title color-red pull-left">{{story.title}}</span>
+                  <span class="pull-right title color-red location">{{story.location.address}}</span>
+                  <div class="clear"></div>
+                </div>
+                <p ng-if="!story.completed" class="desc">{{story.last_contribution.content}} by {{story.last_contribution.username}}</p>
+                <p ng-if="story.completed"class="desc">{{story.first_contribution.content}} by {{story.first_contribution.username}}</p>
+                </section>
+            </div>
+            <div class="contribution-button">
+              <center>
+	              <img src="images/add-contribution.png"  ng-show="!story.completed" type="button" ng-click="contribute(story)">
+	              <img src="images/add-contribution.png"  ng-show="story.completed" type="button" ng-click="viewComplete(story)">
+              </center>
+            </div>
+          </div>
+        </div><!-- #main -->
+      </div>
+    </article>
+  </div>
