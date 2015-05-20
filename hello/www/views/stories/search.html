@@ -1,8 +1,14 @@
+<div class="search-container>
 <form name="getStoriesNearLocationForm" ng-submit="getStoriesNearLocation(address)" novalidate>
-<input id="title" type="text" name="title" ng-model="address" required />
-    <button type="submit"
+<input id="search" type="text" name="search" ng-model="address" required />
+    <button id="search_submit" type="submit"
             ng-disabled="getStoriesNearLocationForm.$invalid">Search</button>
   </form>
+</div>
+<!--           <div class="search-container pull-right">
+            <input id="search" name="search" type="text" placeholder="search bar">
+            <input id="search_submit" value="" type="submit">
+          </div> -->
 
 <ng-include src="'views/stories/filterspartial.html'"> </ng-include>
 
