@@ -163,7 +163,7 @@ gretelApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
 
     Story.getStories()
     .then(function(result){
-      $scope.stories = result.data.reverse();
+      $scope.stories = result.data;
       Map.initMap();
       updateStoryMarkers();
 
@@ -218,7 +218,7 @@ gretelApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
         Story.getNearby($scope.lat, $scope.lng)
           .then(function(result){
             // console.log(result);
-            $scope.stories = result.data;
+            $scope.stories = result.data.reverse();
             updateStoryMarkers();
           }, function(error){
             console.log("Got error trying to get nearby stories", error);
