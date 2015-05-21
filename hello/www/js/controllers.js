@@ -81,13 +81,13 @@ gretelApp.controller('storyCtrl', ['$scope', '$routeParams', '$location', 'Story
     $scope.story = {};
     $scope.inRange = false;
     $scope.completed = false;
-    $scope.contributions = {};    
+    $scope.contributions = {};
 
     Story.getStory($routeParams.id)
       .then(function(result){
         $scope.story = result.data;
         $scope.completed = $scope.story.completed;
-        $scope.contributions = $scope.story.all_contributions;
+        $scope.contributions = $scope.story.all_contributions.reverse();
       },
       function(error){
         console.log('Got error trying to get story: ', error)
@@ -142,7 +142,7 @@ gretelApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map', 'Loca
       })
       .then(function(result){
         // console.log('Result is:', result);
-        $scope.stories = result.data;
+        $scope.stories = result.data.reverse();
         updateStoryMarkers();
 
       })
@@ -150,7 +150,7 @@ gretelApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map', 'Loca
         console.log("Got error trying to get nearby stories", error);
       })
 
-      
+
 }]);
 
 
@@ -163,7 +163,7 @@ gretelApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
 
     Story.getStories()
     .then(function(result){
-      $scope.stories = result.data;
+      $scope.stories = result.data.reverse();
       Map.initMap();
       updateStoryMarkers();
 
