@@ -87,7 +87,7 @@ gretelApp.controller('storyCtrl', ['$scope', '$routeParams', '$location', 'Story
       .then(function(result){
         $scope.story = result.data;
         $scope.completed = $scope.story.completed;
-        $scope.contributions = $scope.story.all_contributions.reverse();
+        $scope.contributions = $scope.story.all_contributions;
       },
       function(error){
         console.log('Got error trying to get story: ', error)
