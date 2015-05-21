@@ -142,7 +142,7 @@ gretelApp.controller('nearbyCtrl', ['$scope', '$location', 'Story', 'Map', 'Loca
       })
       .then(function(result){
         // console.log('Result is:', result);
-        $scope.stories = result.data;
+        $scope.stories = result.data.reverse();
         updateStoryMarkers();
 
       })
@@ -163,7 +163,7 @@ gretelApp.controller('searchCtrl', ['$scope', '$location', 'Story', 'Map',
 
     Story.getStories()
     .then(function(result){
-      $scope.stories = result.data;
+      $scope.stories = result.data.reverse();
       Map.initMap();
       updateStoryMarkers();
 
