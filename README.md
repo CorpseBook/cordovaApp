@@ -1,4 +1,4 @@
-[![Stories in Ready](https://badge.waffle.io/CorpseBook/cordovaApp.png?label=ready&title=Ready)](https://waffle.io/CorpseBook/cordovaApp)
+[![Stories in Ready](https://badge.waffle.io/gretelnz/cordovaApp.png?label=ready&title=Ready)](https://waffle.io/gretelnz/cordovaApp)
 # cordovaApp
 
 - The development branch is the most up-to-date
